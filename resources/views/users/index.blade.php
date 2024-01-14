@@ -30,7 +30,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-info">
+                    <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title"><i class="fa fa-user"></i> Users Management</h3>
                             <div class="card-tools">
@@ -484,7 +484,7 @@
                 $('.alert-danger').hide();
                 $('.alert-success').html('');
                 $('.alert-success').hide();
-              
+
 
                 $.ajax({
                     url: "users/save/" + id,

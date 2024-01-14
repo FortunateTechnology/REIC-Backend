@@ -1,0 +1,127 @@
+@font-face {
+    font-family: 'THSarabunNew';
+    font-style: normal;
+    font-size: 16px;
+    font-weight: normal;
+    src: url("{{ asset('fonts/THSarabunNew.ttf') }}") format("truetype");
+}
+
+
+body {
+    font-family: 'THSarabunNew';
+    font-size: 16px;
+}
+
+
+table {
+    font-size: 1rem;
+}
+
+table td.grey {
+    color: rgb(141, 138, 138);
+
+}
+
+table td.whiteh {
+    color: rgb(255, 255, 255);
+
+}
+
+font.grey {
+    color: rgb(141, 138, 138);
+
+}
+
+
+.tbr table tr.active td {
+    border-top: 2px solid rgb(255, 105, 0);
+    border-bottom: 2px solid rgb(255, 105, 0);
+}
+
+.tbr table td.activetop {
+    border-top: 2px solid rgb(255, 105, 0);
+}
+
+.tbr table td.active_twin {
+    border-left: 2px solid rgb(255, 105, 0);
+    border-right: 2px solid rgb(255, 105, 0);
+}
+
+.tbr table td.active {
+
+    border-right: 2px solid rgb(255, 105, 0);
+}
+
+.tbr table td.activebottom {
+    border-bottom: 2px solid rgb(255, 105, 0);
+}
+
+.tbr table td.activeright {
+    border-right: 2px solid rgb(255, 105, 0);
+}
+
+.tbr table td.activeleft {
+    border-left: 2px solid rgb(255, 105, 0);
+}
+
+.aaa {
+    color: rgb(255, 105, 0);
+}
+
+div.row.tbr {
+    width: 80%;
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+table.centered-table {
+    width: 100%;
+    margin: 0 auto;
+    /* This centers the table inside the div */
+}
+
+#background {
+    z-index: 9999;
+    display: block;
+    min-height: 50%;
+    min-width: 50%;
+}
+
+#bg-text {
+    text-decoration: underline;
+    /* Add underline to the text */
+    z-index: 9999;
+    top: 30%;
+    /* Adjust the top position */
+    left: 20%;
+    /* Adjust the left position */
+    position: absolute;
+    color: rgba(255, 0, 0, 0.7);
+    font-size: 100px;
+    transform: rotate(200deg);
+    -webkit-transform: rotate(300deg);
+}
+
+@media print {
+    /* Hide the modal header and footer when printing */
+    .modal-header,
+    .modal-footer {
+      display: none !important;
+    }
+
+    /* Add spacing at the bottom of the page for the table */
+    body {
+      padding-bottom: 50px; /* Adjust the value as needed */
+    }
+
+    /* Style the table for printing */
+    table.print-table {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: white; /* Add background color if needed */
+      page-break-before: always; /* Ensure a page break before the table */
+    }
+}

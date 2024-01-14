@@ -39,7 +39,7 @@
 
         <style>
             body {
-                background-color: #3E4FBB;
+                background-color: #2B83F6FC !important;
                 font-family: 'Sarabun', serif;
             }
 
