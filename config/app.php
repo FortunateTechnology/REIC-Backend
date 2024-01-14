@@ -16,8 +16,8 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
-    'subtitle' => env('APP_SUBTITLE', 'System'),
+    'name' => env('APP_NAME', 'REIC'),
+    'subtitle' => env('APP_SUBTITLE', 'Visualization'),
 
     /*
     |--------------------------------------------------------------------------
