@@ -5,22 +5,22 @@
         <p>Dashboard</p>
     </a>
 </li>
-{{-- <li class="nav-item">
+<li class="nav-item">
 
-    <a href="{{ route('roles.index') }}" class="nav-link {{ Request::is('roles.index') ? 'active' : '' }}">
+    <a href="{{ route('member.index') }}" class="nav-link {{ Request::is('member.index') ? 'active' : '' }}">
         <i class="nav-icon fas fa-users"></i>
-        <p>Contact</p>
+        <p>Member</p>
     </a>
 
 </li>
 <li class="nav-item">
 
-    <a href="{{ route('roles.index') }}" class="nav-link {{ Request::is('roles.index') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-warehouse"></i>
-         <p>Stock</p>
+    <a href="{{ route('package.index') }}" class="nav-link {{ Request::is('package.index') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-cubes"></i>
+        <p>Package</p>
     </a>
 
-</li> --}}
+</li>
 <li class="nav-item">
 
     <a href="{{ route('users.index') }}" class="nav-link {{ Request::is('users.index') ? 'active' : '' }}">
@@ -37,8 +37,3 @@
     </a>
 
 </li>
-
-
-
-
-
