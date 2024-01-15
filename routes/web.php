@@ -49,19 +49,24 @@ Route::group(['middleware' => ['auth']], function() {
     Route::delete('/package/destroy', [PackageController::class, 'destroy'])->name('package.destroy');
     Route::post('/package/destroy_all', [PackageController::class, 'destroy_all'])->name('package.destroy_all');
 
-    Route::get('/faq', [App\Http\Controllers\FaqController::class, 'index'])->name('faq');
+
+    Route::get('/faq', [App\Http\Controllers\FaqController::class, 'index'])->name('faq.index');
     Route::post('/faq/store', [App\Http\Controllers\FaqController::class, 'store'])->name('faq.store');
     Route::get('/faq/edit/{id}', [App\Http\Controllers\FaqController::class, 'edit'])->name('faq.edit');
     Route::put('/faq/save/{id}', [App\Http\Controllers\FaqController::class, 'update'])->name('faq.save');
     Route::delete('/faq/destroy', [App\Http\Controllers\FaqController::class, 'destroy'])->name('faq.destroy');
     Route::post('/faq/destroy_all', [App\Http\Controllers\FaqController::class, 'destroy_all'])->name('faq.destroy_all');
 
-    Route::get('/popup', [App\Http\Controllers\PopupController::class, 'index'])->name('popup');
+    Route::get('/popup', [App\Http\Controllers\PopupController::class, 'index'])->name('popup.index');
     Route::post('/popup/store', [App\Http\Controllers\PopupController::class, 'store'])->name('popup.store');
     Route::get('/popup/edit/{id}', [App\Http\Controllers\PopupController::class, 'edit'])->name('popup.edit');
     Route::put('/popup/save/{id}', [App\Http\Controllers\PopupController::class, 'update'])->name('popup.save');
     Route::delete('/popup/destroy', [App\Http\Controllers\PopupController::class, 'destroy'])->name('popup.destroy');
     Route::post('/popup/destroy_all', [App\Http\Controllers\PopupController::class, 'destroy_all'])->name('popup.destroy_all');
+
+    //REPORT
+    Route::get('/reportmemberstatus', [App\Http\Controllers\ReportMemberStatusController::class, 'index'])->name('reportmemberstatus.index');
+    Route::get('/reporttoppackage', [App\Http\Controllers\ReportTopPackageController::class, 'index'])->name('reporttoppackage.index');
 });
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

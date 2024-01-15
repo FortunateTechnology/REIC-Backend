@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css">
+<link rel="stylesheet" href="dist/daterangepicker/daterangepicker.css">
 <script>
     $(document).ready(function() {
         $(".delete_all_button").click(function() {
@@ -184,6 +186,7 @@
             $('.alert-success').html('');
             $('.alert-success').hide();
             //$('textarea#summernote').html('เวลาทำการ');
+            $('#thead').html('<i class="fas fa-list-ol"></i> แก้ไข คำถามที่พบบ่อย');
             $('#summernote').summernote('pasteHTML', 'เวลาทำการ');
             //$('textarea#qsummernote').html('จันทร์ - ศุกร์ 8.30 - 15.30');
             $('#qsummernote').summernote('pasteHTML', 'จันทร์ - ศุกร์ 8.30 - 15.30');
@@ -298,6 +301,8 @@
 
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script src="dist/daterangepicker/daterangepicker.js"></script>
 <script>
     $(function () {
       // Summernote

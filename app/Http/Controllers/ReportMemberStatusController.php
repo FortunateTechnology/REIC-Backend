@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 
-class PopupController extends Controller
+class ReportMemberStatusController extends Controller
 {
 
      /**
@@ -38,53 +38,33 @@ class PopupController extends Controller
      */
     public function index(Request $request)
     {
-        /*  $data = User::orderBy('id', 'DESC')->paginate(5);
-        $roles = Role::pluck('name', 'name')->all();
-        return view('users.index', compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5)
-            ->with('roles', $roles); */
-        if ($request->ajax()) {
-            //sleep(2);
+        $numberOfRows = 5;
+        $datas = [];
 
-            //$datas = User::orderBy("id", "desc")->get();
+        $no = [1, 2, 3, 4, 5];
+        $name = ['วิเชียร เก่งอ่าง', 'สมชาย มงคล','สมหญิง เก่งอ่าง','วิเชียร ศรีสุข','วิเชียร มงคล'];
+        $status = ['ต่ออายุแล้ว', 'กำลังจะหมดอายุใน 1 เดือน', 'หมดอายุแล้ว', 'กำลังจะหมดอายุใน 3 เดือน', 'หมดอายุแล้ว'];
 
+        for ($i = 1; $i <= $numberOfRows; $i++) {
 
-            $numberOfRows = 2;
-            $datas = [];
+            //$ivrno  = $rivrno[array_rand($rivrno)];
+            //$createDate = now()->subDays(rand(1, 365))->subHours(rand(0, 23))->subMinutes(rand(0, 59));
 
-            $rivrname = ['เวลาทำการ', 'เบอร์โทรศัพท์'];
-            $rivrno = ['2024-01-18 00:00:00 - 2024-01-25 23:59:59', '2024-01-19 00:00:00 - 2024-01-20 23:59:59'];
-
-            for ($i = 1; $i <= $numberOfRows; $i++) {
-
-                //$ivrno  = $rivrno[array_rand($rivrno)];
-                //$createDate = now()->subDays(rand(1, 365))->subHours(rand(0, 23))->subMinutes(rand(0, 59));
-
-
-                $datas[] = (object) [
-                    'id' => $i,
-                    'topic' => $rivrname[$i-1],
-                    'dates' => $rivrno[$i-1],
-                    'status' => 1,
-                ];
-            }
-
-
-            return datatables()->of($datas)
-                ->editColumn('checkbox', function ($row) {
-                    return '<input type="checkbox" id="' . $row->id . '" class="flat" name="table_records[]" value="' . $row->id . '" >';
-                })
-                ->editColumn('status', function ($row) {
-                    return 'เปิด';
-                })
-                ->addColumn('action', function ($row) {
-                    $html = '<a href="#" class="btn btn-sm btn-warning btn-edit" id="getEditData" data-id="' . $row->id . '"><i class="fa fa-edit"></i> Edit</a> ';
-                    $html .= '<a href="#" data-rowid="' . $row->id . '" class="btn btn-sm btn-danger btn-delete"><i class="fa fa-trash"></i> Delete</a>';
-                    return $html;
-                })->rawColumns(['checkbox', 'action'])->toJson();
+            $datas[] = (object) [
+                'id' => $no[$i-1],
+                'name' => $name[$i-1],
+                'status' => $status[$i-1],
+            ];
         }
 
-        return view('popup.index');
+        if ($request->ajax()) {
+            return datatables()->of($datas)
+            //    ->editColumn('checkbox', function ($row) {
+            //        return '<input type="checkbox" id="" class="flat" name="table_records[]" value="" >';
+            //})->rawColumns(['checkbox', 'action'])
+            ->toJson();
+        }
+        return view('reportmemberstatus.index');
     }
 
     /**

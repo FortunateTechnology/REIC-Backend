@@ -67,12 +67,12 @@
                     searchable: false
                 },
                 {
-                    data: 'faq',
-                    name: 'faq'
+                    data: 'topic',
+                    name: 'topic'
                 },
                 {
-                    data: 'afaq',
-                    name: 'afaq'
+                    data: 'dates',
+                    name: 'dates'
                 },
                 {
                     data: 'status',
@@ -171,10 +171,11 @@
             $('.alert-danger').hide();
             $('.alert-success').html('');
             $('.alert-success').hide();
+            $('#thead').html('<i class="fas fa-list-ol"></i> แก้ไข Popup');
             //$('textarea#summernote').html('เวลาทำการ');
-            $('#summernote').summernote('pasteHTML', 'เวลาทำการ');
+            $('#summernote').summernote('pasteHTML', 'เบอร์โทรศัพท์ 020000000 ไม่สามารถใช้งานได้');
             //$('textarea#qsummernote').html('จันทร์ - ศุกร์ 8.30 - 15.30');
-            $('#qsummernote').summernote('pasteHTML', 'จันทร์ - ศุกร์ 8.30 - 15.30');
+            $('#qsummernote').summernote('pasteHTML', '2024-01-19 00:00:00 - 2024-01-20 23:59:59');
             $('#CreateModal').modal('show');
 /*
             id = $(this).data('id');

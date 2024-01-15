@@ -37,3 +37,35 @@
     </a>
 
 </li>
+<li class="nav-item">
+
+    <a href="{{ route('faq.index') }}" class="nav-link {{ Request::is('faq.index') ? 'active' : '' }}">
+        <i class="nav-icon fa-solid fa-question"></i>
+        <p>FAQ</p>
+    </a>
+
+</li>
+<li class="nav-item">
+
+    <a href="{{ route('popup.index') }}" class="nav-link {{ Request::is('popup.index') ? 'active' : '' }}">
+        <i class="nav-icon fa-regular fa-window-maximize"></i>
+        <p>POPUP</p>
+    </a>
+
+</li>
+<li class="nav-item">
+
+    <a href="{{ route('reportmemberstatus.index') }}" class="nav-link {{ Request::is('reportmemberstatus.index') ? 'active' : '' }}">
+        <i class="nav-icon fa-solid fa-print"></i>
+        <p>รายงานสถานะสมาชิก</p>
+    </a>
+
+</li>
+<li class="nav-item">
+
+    <a href="{{ route('reporttoppackage.index') }}" class="nav-link {{ Request::is('reporttoppackage.index') ? 'active' : '' }}">
+        <i class="nav-icon fa-solid fa-print"></i>
+        <p>รายงานสถิติการเลือกใช้ Package</p>
+    </a>
+
+</li>

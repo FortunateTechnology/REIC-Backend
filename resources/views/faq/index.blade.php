@@ -15,7 +15,7 @@
                         {{-- <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active">Users Management</li> --}}
 
-                        @can('user-create')
+                        @can('member-create')
                             <button type="button" class="btn btn-success" id="CreateButton">
                                 <i class="fas fa-list-ol"></i> เพิ่ม คำถามที่พบบ่อย </a> </button>
                         @else
@@ -26,7 +26,7 @@
                             </span>
                         @endcan &nbsp;
 
-                        @can('user-create')
+                        @can('member-create')
                             <button type="button" class="btn btn-danger delete_all_button"><i class="fa fa-trash"></i> ลบ
                                 ทั้งหมด</button>
                         @else
