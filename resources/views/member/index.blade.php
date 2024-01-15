@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('style')
-    @include('contacts.style')
+    @include('member.style')
 @endsection
 
 @section('content')
@@ -17,7 +17,7 @@
                         <li class="breadcrumb-item active">Users Management</li> --}}
 
 
-                        @can('contact-create')
+                        @can('member-create')
                             <button type="button" class="btn btn-success" id="CreateButton">
                                 <i class="fas fa-address-book"></i> เพิ่ม รายชื่อผู้ติดต่อ </button>
                         @else
@@ -28,7 +28,7 @@
                             </span>
                         @endcan &nbsp;
 
-                        @can('contact-delete')
+                        @can('member-delete')
                             <button type="button" class="btn btn-danger delete_all_button"><i class="fa fa-trash"></i> ลบ
                                 ทั้งหมด</button>
                         @else
@@ -98,22 +98,6 @@
                                     <div class="row float-lg-right">
                                         <div class="col-xs-4 col-sm-4 col-md-4">
                                             <div class="form-group">
-                                                <strong><i class="fa-solid fa-id-card"></i>
-                                                    ประเภทการค้นหา:</strong>
-                                                <select style="width: 100%;" class="select2 form-control" id="seachtype"
-                                                    name="seachtype">
-                                                    <option value="0" selected>ตัวเลือกการค้นหา</option>
-                                                    <option value="5">รหัสผู้ติดต่อ</option>
-                                                    <option value="6">ชื่อผู้ติดต่อ</option>
-                                                    <option value="1">เบอร์โทรฉุกเฉิน</option>
-                                                    <option value="2">เบอร์โทรศัพท์บ้าน</option>
-                                                    <option value="3">เบอร์โทรศัพท์มือถือ</option>
-                                                    <option value="4">เบอร์โทรศัพท์ที่ทำงาน</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-4 col-sm-4 col-md-4">
-                                            <div class="form-group">
                                                 <strong><i class="fa-regular fa-keyboard"></i>
                                                     คำที่ต้องการค้นหา:</strong>
                                                 {!! Form::text('seachtext', null, [
@@ -139,7 +123,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <form method="post" action="{{ route('contacts.destroy_all') }}" name="delete_all"
+                                    <form method="post" action="" name="delete_all"
                                         id="delete_all">
                                         @csrf
                                         @method('POST')
@@ -176,13 +160,13 @@
     </section>
 
 
-    @include('contacts.create')
+    @include('member.create')
 
-    @include('contacts.edit')
+    @include('member.edit')
 
     {{--  {!! $data->render() !!} --}}
 @endsection
 
 @section('script')
-    @include('contacts.script')
+    @include('member.script')
 @endsection

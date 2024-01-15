@@ -1,6 +1,4 @@
-@php
-    $detect = new Detection\MobileDetect();
-@endphp
+
 <script>
     $(document).ready(function() {
         $("#etm").val(1).trigger("change")
@@ -235,9 +233,6 @@
             stateSave: true,
             autoWidth: false,
             fixedHeader: true,
-            @if ($detect->isMobile())
-                responsive: true,
-            @else
                 responsive: {
                     details: {
                         type: 'column',
@@ -249,7 +244,6 @@
                     orderable: false,
                     targets: -1
                 }],
-            @endif
             sPaginationType: "full_numbers",
             dom: 'T<"clear">lfrtip',
             columns: [{
@@ -317,40 +311,7 @@
             $('.alert-danger').hide();
             $('.alert-success').html('');
             $('.alert-success').hide();
-            $.ajax({
-                method: "GET",
-                url: "{{ route('contacts.running') }}",
-                success: function(res) {
-                    console.log(res)
-                    $('#AddCode').val(res.running);
-                }
-            });
-            $.ajax({
-                url: "{{ route('thcity.city') }}",
-                method: 'GET',
-                success: function(res) {
-                    //alert(res.data.code);
-                    var provinceOb = $('#Addcity');
-                    provinceOb.html('<option value="">เลือกจังหวัด</option>');
-                    $.each(res.data, function(index, item) {
-                        provinceOb.append(
-                            $('<option></option>').val(item.code).html(item
-                                .name_th)
-                        );
-                    });
 
-                    setTimeout(function() {
-                        $('#Addcity').val('65');
-                        $('#Addcity').change();
-                    }, 1000)
-
-                }
-            });
-            var tbody = document.querySelector('#myTbl3 tbody');
-            var rows = tbody.querySelectorAll('tr');
-            for (var i = 1; i < rows.length; i++) {
-                tbody.removeChild(rows[i]);
-            }
             $('#custom-tabs-one-tabp a[href="#custom-tabs-one-home"]').tab('show');
             $('#CreateModal').modal('show');
         });
@@ -364,95 +325,9 @@
             $('.alert-danger').hide();
             $('.alert-success').html('');
             $('.alert-success').hide();
-
-            var emergencyData = [];
-            $('#myTbl3 tbody tr').each(function() {
-                var emergencyname = $(this).find('input[name="emergencyname[]"]').val();
-                var emerrelation = $(this).find('input[name="emerrelation[]"]').val();
-                var emerphone = $(this).find('input[name="emerphone[]"]').val();
-
-                var emergency = {
-                    emergencyname: emergencyname,
-                    emerrelation: emerrelation,
-                    emerphone: emerphone
-                };
-                emergencyData.push(emergency);
-            });
-
-            var arrayDate = $('#Addadddate').val().split("-");
-            arrayDate[0] = parseInt(arrayDate[0]) - 543;
-            var tempadddate = arrayDate[0] + "-" + arrayDate[1] + "-" + arrayDate[2];
-
-            var arrayDateb = $('#Addbirthday').val().split("-");
-            arrayDateb[0] = parseInt(arrayDateb[0]) - 543;
-            var tempbirthday = arrayDateb[0] + "-" + arrayDateb[1] + "-" + arrayDateb[2];
-
-            var additionalData = {
-                hn: $('#Addhn').val(),
-                adddate: tempadddate,
-                tname: $('#Addtname').val(),
-                fname: $('#Addfname').val(),
-                lname: $('#Addlname').val(),
-                sex: $('#Addsex').val(),
-                birthday: tempbirthday,
-                age: $('#Addage').val(),
-                bloodgroup: $('#Addbloodgroup').val(),
-                homeno: $('#Addhomeno').val(),
-                moo: $('#Addmoo').val(),
-                soi: $('#Addsoi').val(),
-                road: $('#Addroad').val(),
-                city: $('#Addcity').val(),
-                district: $('#Adddistrict').val(),
-                subdistrict: $('#Addsubdistrict').val(),
-                postcode: $('#Addpostcode').val(),
-                telhome: $('#Addtelhome').val(),
-                phoneno: $('#Addphoneno').val(),
-                workno: $('#Addworkno').val(),
-                checkemer: $('#Addcheckemer').val(),
-                emergencyData: emergencyData,
-                _token: token
-            };
-
-            $.ajax({
-                url: "{{ route('contacts.store') }}",
-                method: 'post',
-                data: additionalData,
-                success: function(result) {
-                    if (result.errors) {
-                        $('.alert-danger').html('');
-                        $.each(result.errors, function(key, value) {
-                            $('.alert-danger').show();
-                            $('.alert-danger').append('<strong><li>' + value +
-                                '</li></strong>');
-                        });
-                        //$('#CreateModal').scrollTop(0);
-                        $('.alert-danger').focus();
-                    } else {
-                        $('.alert-danger').hide();
-                        $('.alert-success').show();
-                        $('.alert-success').append('<strong><li>' + result.success +
-                            '</li></strong>');
-                        toastr.success(result.success, {
-                            timeOut: 5000
-                        });
-                        $('#Listview').DataTable().ajax.reload();
-                        $('.form').trigger('reset');
-                        $('#CreateModal').modal('hide');
-                    }
-                }
-            });
         });
 
         let id;
-        $(document).on('click', '#getCases', function(e) {
-            id = $(this).data('id');
-            //window.location.href = "{{ route('cases', ['id' => '.id.']) }}";
-            //window.location.href = "cases";
-            //var id = '12';
-            var url = "casescontract?id=" + id;
-            //url = url.replace(':id', id);
-            location.href = url;
-        });
         $(document).on('click', '#getEditData', function(e) {
             e.preventDefault();
             $('.alert-danger').html('');
@@ -461,99 +336,6 @@
             $('.alert-success').hide();
 
             id = $(this).data('id');
-            $.ajax({
-                url: "{{ route('thcity.city') }}",
-                method: 'GET',
-                success: function(res) {
-                    //alert(res.data.code);
-                    var provinceOb = $('#Editcity');
-                    provinceOb.html('<option value="">เลือกจังหวัด</option>');
-                    $.each(res.data, function(index, item) {
-                        provinceOb.append(
-                            $('<option></option>').val(item.code).html(item
-                                .name_th)
-                        );
-                    });
-                }
-            });
-            setTimeout(function() {
-                $.ajax({
-                    url: "contacts/edit/" + id,
-                    method: 'GET',
-                    success: function(res) {
-                        $('#Edithn').val(res.datax.datac.hn);
-
-                        var arrayDate = res.datax.datac.adddate.split("-");
-                        arrayDate[0] = parseInt(arrayDate[0]) + 543;
-                        $('#Editadddate').val(arrayDate[0] + "-" + arrayDate[1] +
-                            "-" + arrayDate[2]);
-
-                        //$('#Editadddate').val(res.datax.datac.adddate);
-                        $('#Edittname').val(res.datax.datac.tname);
-                        $('#Editfname').val(res.datax.datac.fname);
-                        $('#Editlname').val(res.datax.datac.lname);
-                        $('#Editsex').val(res.datax.datac.sex);
-
-                        var arrayDateb = res.datax.datac.birthday.split("-");
-                        arrayDateb[0] = parseInt(arrayDateb[0]) + 543;
-                        $('#Editbirthday').val(arrayDateb[0] + "-" + arrayDateb[1] +
-                            "-" + arrayDateb[2]);
-                        //$('#Editbirthday').val(res.datax.datac.birthday);
-
-                        $('#Editage').val(res.datax.datac.age);
-                        $('#Editbloodgroup').val(res.datax.datac.bloodgroup);
-                        $('#Edithomeno').val(res.datax.datac.homeno);
-                        $('#Editmoo').val(res.datax.datac.moo);
-                        $('#Editsoi').val(res.datax.datac.soi);
-                        $('#Editroad').val(res.datax.datac.road);
-                        $('#Editcity').val(res.datax.datac.city);
-                        $('#Editcity').change();
-                        setTimeout(function() {
-                            $('#Editdistrict').val(res.datax.datac
-                                .district);
-                            $('#Editdistrict').change();
-                            setTimeout(function() {
-                                $('#Editsubdistrict').val(res.datax
-                                    .datac.subdistrict);
-                            }, 1000)
-                        }, 1000)
-                        $('#Editpostcode').val(res.datax.datac.postcode);
-                        $('#Edittelhome').val(res.datax.datac.telhome);
-                        $('#Editphoneno').val(res.datax.datac.phoneno);
-                        $('#Editworkno').val(res.datax.datac.workno);
-
-                        var tbody = document.querySelector('#myTbl3e tbody');
-                        while (tbody.firstChild) {
-                            tbody.removeChild(tbody.firstChild);
-                        }
-
-                        $.each(res.datax.emer, function(index, value) {
-                            $('#myTbl3e tbody').append($('<tr>')
-                                .append($('<td style="display:none;">')
-                                    .append(value.id))
-                                .append($('<td width="30%">').append(
-                                    '<div class="col-md-12 col-sm-12 col-xs-12"><input type="text" id="eemergencyname" name="eemergencyname[]" class="form-control has-feedback-left" value="' +
-                                    value.emergencyname +
-                                    '" required="required"></div>'))
-                                .append($('<td width="10%">').append(
-                                    '<div class="col-md-12 col-sm-12 col-xs-12"><input type="text" id="eemerrelation" name="eemerrelation[]" class="form-control has-feedback-left" value="' +
-                                    value.emerrelation +
-                                    '" required="required"></div>'))
-                                .append($('<td width="10%">').append(
-                                    '<div class="col-md-12 col-sm-12 col-xs-12"><input type="text" id="eemerphone" name="eemerphone[]" class="form-control has-feedback-left" onkeydown="validateNumber(event)" value="' +
-                                    value.emerphone +
-                                    '" required="required"></div>'))
-                                .append($('<td width="5%">').append(
-                                    '<button type="button" name="deletem" id="deletem" class="btn btn-sm btn-danger removeRowBtn" onclick="$(this).closest(\'tr\').remove();\"><i class="fa fa-minus"></i></button>'
-                                )));
-                        });
-
-                        $('#custom-tabs-one-tabe a[href="#custom-tabs-one-homee"]')
-                            .tab('show');
-                        $('#EditModal').modal('show');
-                    }
-                });
-            }, 1000)
         });
 
         $('#SubmitEditForm').click(function(e) {

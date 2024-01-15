@@ -31,10 +31,10 @@ class MemberController extends Controller
     public function __construct()
     {
         //$this->middleware('auth');
-        $this->middleware('permission:contact-list|contact-create|contact-edit|contact-delete', ['only' => ['index', 'show']]);
-        $this->middleware('permission:contact-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:contact-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:contact-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:member-list|member-create|member-edit|member-delete', ['only' => ['index', 'show']]);
+        $this->middleware('permission:member-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:member-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:member-delete', ['only' => ['destroy']]);
     }
 
     public function index(Request $request)
@@ -84,7 +84,7 @@ class MemberController extends Controller
                 })->rawColumns(['checkbox', 'action'])->toJson();
         }
 
-        return view('contacts.index');
+        return view('member.index');
     }
 
     public function popup_content(Request $request)
