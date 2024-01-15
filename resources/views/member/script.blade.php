@@ -197,11 +197,7 @@
 
         var table = $('#Listview').DataTable({
             ajax: {
-                data: function(d) {
-                    d.seachtype = $("#seachtype").val();
-                    d.seachtext = $("#seachtext").val();
-                    d.sdate = $('#reservation').val();
-                }
+
             },
             serverSide: true,
             processing: true,
@@ -226,7 +222,7 @@
                 }
             },
             aaSorting: [
-                [0, "desc"]
+                [0, "asc"]
             ],
             iDisplayLength: 5,
             lengthMenu: [5, 10, 25, 50, 75, 100],
@@ -247,8 +243,8 @@
             sPaginationType: "full_numbers",
             dom: 'T<"clear">lfrtip',
             columns: [{
-                    data: 'id',
-                    name: 'id',
+                    data: 'checkbox',
+                    name: 'checkbox',
                     orderable: false,
                     searchable: false
                 },
@@ -259,6 +255,10 @@
                 {
                     data: 'action',
                     name: 'action'
+                },
+                {
+                    data: 'more',
+                    name: 'more'
                 },
             ]
         });
@@ -311,7 +311,7 @@
             $('.alert-danger').hide();
             $('.alert-success').html('');
             $('.alert-success').hide();
-
+            $('#thead').html('<i class="fas fa-list-ol"></i> เพิ่ม Member');
             $('#custom-tabs-one-tabp a[href="#custom-tabs-one-home"]').tab('show');
             $('#CreateModal').modal('show');
         });
@@ -334,8 +334,26 @@
             $('.alert-danger').hide();
             $('.alert-success').html('');
             $('.alert-success').hide();
+            $('#thead').html('<i class="fas fa-list-ol"></i> แก้ไข Member');
+            $('#Addtname').val('นางสาว');
+            $('#Addfname').val('วิเชียร');
+            $('#Addlname').val('มงคล');
+            $('#Addsex').val('ชาย');
+            $('#Addbirthday').val('2567-01-02');
+            $('#Addhomeno').val('61');
+            $('#Addmoo').val('8');
+            $('#Addsoi').val('-');
+            $('#Addroad').val('-');
 
-            id = $(this).data('id');
+            $('#Addcity').val('2');
+            $('#Adddistrict').val('1');
+            $('#Addsubdistrict').val('1');
+            $('#Addpostcode').val('12345');
+
+            $('#Addtelhome').val('020000000');
+            $('#Addphoneno').val('');
+            $('#Addworkno').val('');
+            $('#CreateModal').modal('show');
         });
 
         $('#SubmitEditForm').click(function(e) {

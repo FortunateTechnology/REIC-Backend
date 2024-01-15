@@ -51,7 +51,7 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title"><i class="fas fa-address-book"></i> รายชื่อผู้ติดต่อ</h3>
+                            <h3 class="card-title"><i class="fas fa-address-book"></i> Member</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="maximize">
                                     <i class="fas fa-expand"></i>
@@ -96,7 +96,7 @@
                                         </div>
                                     </div>
                                     <div class="row float-lg-right">
-                                        <div class="col-xs-4 col-sm-4 col-md-4">
+                                        <div class="col-xs-8 col-sm-8 col-md-8">
                                             <div class="form-group">
                                                 <strong><i class="fa-regular fa-keyboard"></i>
                                                     คำที่ต้องการค้นหา:</strong>
@@ -131,11 +131,9 @@
                                             class="display nowrap table table-bordered table-striped table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th width="5%"><input type="checkbox" id="check-all"
-                                                            class="flat">
-                                                    </th>
+                                                    <th width="50"><input type="checkbox" id="check-all" class="flat"></th>
                                                     <th>ชื่อนามสกุล</th>
-                                                    <th width="120px"></th>
+                                                    <th width="200px">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header bg-primary">
-                <h4 class="modal-title"><i class="fas fa-address-book"></i> เพิ่ม รายชื่อผู้ติดต่อ</h4>
+                <h4 class="modal-title"><div id="thead"><i class="fas fa-list-ol"></i> เพิ่ม Member</div></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -61,31 +61,6 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
-
-                                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                                <div class="form-group">
-                                                    <strong><i class="fas fa-code"></i> รหัสผู้ติดต่อ.</strong>
-                                                    {!! Form::text('hn', null, [
-                                                        'id' => 'Addhn',
-                                                        'placeholder' => 'รหัสผู้ติดต่อ',
-                                                        'class' => 'form-control',
-                                                        //'readonly' => true,
-                                                    ]) !!}
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                                <div class="form-group">
-                                                    <strong><i class="fas fa-calendar"></i> วันที่บันทึก:</strong>
-                                                    {!! Form::text('adddate', null, [
-                                                        'id' => 'Addadddate',
-                                                        'placeholder' => 'วันที่บันทึก',
-                                                        'class' => 'AddDate form-control',
-                                                        'data-target' => '#reservationdate',
-                                                    ]) !!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
                                         </div>
                                         <div class="row">
                                             <div class="col-xs-6 col-sm-6 col-md-6">
@@ -142,28 +117,6 @@
                                                         'class' => 'AddDate form-control',
                                                         'data-target' => '#reservationdate',
                                                     ]) !!}
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                                <div class="form-group">
-                                                    <strong><i class="fas fa-user-tie"></i> อายุ:</strong>
-                                                    {!! Form::text('Addage', null, ['id' => 'Addage', 'placeholder' => 'อายุ', 'class' => 'form-control','readonly' => true]) !!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                                <div class="form-group">
-                                                    <strong><i class="fas fa-user-tie"></i> กรุ๊ปเลือด:</strong>
-                                                    <select style="width: 100%;"
-                                                        class="select2 form-control"
-                                                        id="Addbloodgroup" name="Addbloodgroup">
-                                                        <option value="">กรุณาเลือก</option>
-                                                        <option value="A">A</option>
-                                                        <option value="B">B</option>
-                                                        <option value="AB">AB</option>
-                                                        <option value="O">O</option>
-                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -224,6 +177,9 @@
                                                     <strong><i class="fa-solid fa-city"></i> จังหวัด :</strong>
                                                     <select class="select2 form-control" id="Addcity"
                                                         name="city">
+                                                        <option value="0">กรุณาเลือก</option>
+                                                        <option value="1">กรุงเทพมหานคร</option>
+                                                        <option value="2">นนทบุรี</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -234,6 +190,7 @@
                                                     <select class="select2 form-control" id="Adddistrict"
                                                         name="district">
                                                         <option value="">กรุณาเลือกอำเภอ</option>
+                                                        <option value="1">บางบัวทอง </option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -247,6 +204,7 @@
                                                     <select class="select2 form-control" id="Addsubdistrict"
                                                         name="subdistrict">
                                                         <option value="">กรุณาเลือกตำบล</option>
+                                                        <option value="1">ลำโพ</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -311,31 +269,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="row">
-                                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                                <table id="myTbl3"
-                                                    class="table table-striped table-bordered responsive-utilities jambo_table "
-                                                    width="400">
-                                                    <thead>
-                                                        <tr class="headings">
-                                                            <th class="column-title">
-                                                                ชื่อบุคคลที่ติดต่อได้ในกรณีฉุกเฉิน<input type="hidden" value="" name="checkemer" id="Addcheckemer"></th>
-                                                            <th class="column-title"> ความสัมพันธ์</th>
-                                                            <th class="column-title"> เบอร์โทรศัพท์</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-md-12" align="right">
-
-                                                <button type="button" id="addRowBtn"
-                                                    class="btn btn-primary btnAddg"><i class="fa-solid fa-plus"></i> เพิ่มบุคคลที่ติดต่อได้ในกรณีฉุกเฉิน</button>
-                                            </div>
-                                        </div>
-
                                     </div>
                                 </div>
                             </div>
