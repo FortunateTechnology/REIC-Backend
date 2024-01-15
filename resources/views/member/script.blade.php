@@ -24,71 +24,6 @@
             $(':checkbox.flat').prop('checked', this.checked);
         });
 
-        $(".select2_single").select2({
-            maximumSelectionLength: 1,
-            allowClear: true,
-            //theme: 'bootstrap4'
-            placeholder: 'กรุณาเลือก'
-        });
-        $(".select2_single2").select2({
-            maximumSelectionLength: 1,
-            allowClear: true,
-            //theme: 'bootstrap4'
-            placeholder: 'กรุณาเลือก'
-        });
-        $(".select2_single3").select2({
-            maximumSelectionLength: 1,
-            allowClear: true,
-            //theme: 'bootstrap4'
-            placeholder: 'กรุณาเลือก'
-        });
-        $(".select2_singlee").select2({
-            maximumSelectionLength: 1,
-            allowClear: true,
-            //theme: 'bootstrap4'
-            placeholder: 'กรุณาเลือก'
-        });
-        $(".select2_singlee2").select2({
-            maximumSelectionLength: 1,
-            allowClear: true,
-            //theme: 'bootstrap4'
-            placeholder: 'กรุณาเลือก'
-        });
-        $(".select2_singlee3").select2({
-            maximumSelectionLength: 1,
-            allowClear: true,
-            //theme: 'bootstrap4'
-            placeholder: 'กรุณาเลือก'
-        });
-
-        $(".select2_single").on("select2:unselect", function(e) {
-            //log("select2:unselect", e);
-            //$('.products').html('');
-        });
-
-        $(".select2_singles").select2({
-            maximumSelectionLength: 1,
-            allowClear: false,
-            //theme: 'bootstrap4'
-            placeholder: 'กรุณาเลือก'
-        });
-
-        $(".select2_singlec").select2({
-            maximumSelectionLength: 1,
-            allowClear: false,
-            //theme: 'bootstrap4'
-            placeholder: 'กรุณาเลือก'
-        });
-
-
-        $(".select2_multiple").select2({
-            maximumSelectionLength: 2,
-            //placeholder: "With Max Selection limit 4",
-            allowClear: false,
-            //theme: 'bootstrap4'
-            placeholder: 'กรุณาเลือก'
-        });
-
         //$(".AddDate").datepicker({
         //    dateFormat: "yy-mm-dd"
         //});
@@ -318,39 +253,19 @@
             sPaginationType: "full_numbers",
             dom: 'T<"clear">lfrtip',
             columns: [{
-                    data: 'checkbox',
-                    name: 'checkbox',
+                    data: 'id',
+                    name: 'id',
                     orderable: false,
                     searchable: false
-                },
-                {
-                    data: 'hn',
-                    name: 'hn'
                 },
                 {
                     data: 'fname',
                     name: 'fname'
                 },
                 {
-                    data: 'telhome',
-                    name: 'telhome'
-                },
-                {
-                    data: 'phoneno',
-                    name: 'phoneno'
-                },
-                {
-                    data: 'adddate',
-                    name: 'adddate'
-                },
-                {
                     data: 'action',
                     name: 'action'
                 },
-                {
-                    data: 'more',
-                    name: 'more'
-                }
             ]
         });
 

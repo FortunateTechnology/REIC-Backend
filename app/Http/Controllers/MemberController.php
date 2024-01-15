@@ -40,46 +40,23 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            if (!empty($request->get('sdate'))) {
-                $dateRange = $request->input('sdate');
-                if ($dateRange) {
-                    $dateRangeArray = explode(' - ', $dateRange);
-                    if (!empty($dateRangeArray) && count($dateRangeArray) == 2) {
-                        $startDate = $dateRangeArray[0];
-                        $endDate = $dateRangeArray[1];
-                    }
-                }
-            }
 
-            if ($request->input('seachtype') === "0") {
-                $datas = DB::table('crm_contacts')->whereRaw('adddate between "' . $startDate . '" and "' . $endDate . '"')
-                    ->get();
-            } else if ($request->input('seachtype') === "1") {
-                $datas = DB::table('crm_contacts')
-                    ->join('crm_phone_emergencies', 'crm_contacts.id', '=', 'crm_phone_emergencies.contact_id')
-                    ->where('emerphone', '=', $request->input('seachtext'))
-                    ->whereRaw('adddate between "' . $startDate . '" and "' . $endDate . '"')
-                    ->get();
-            } else if ($request->input('seachtype') === "2") {
-                $datas = DB::table('crm_contacts')->where('telhome', '=', $request->input('seachtext'))
-                    ->whereRaw('adddate between "' . $startDate . '" and "' . $endDate . '"')
-                    ->get();
-            } else if ($request->input('seachtype') === "3") {
-                $datas = DB::table('crm_contacts')->where('phoneno', '=', $request->input('seachtext'))
-                    ->whereRaw('adddate between "' . $startDate . '" and "' . $endDate . '"')
-                    ->get();
-            } else if ($request->input('seachtype') === "4") {
-                $datas = DB::table('crm_contacts')->where('workno', '=', $request->input('seachtext'))
-                    ->whereRaw('adddate between "' . $startDate . '" and "' . $endDate . '"')
-                    ->get();
-            } else if ($request->input('seachtype') === "5") {
-                $datas = DB::table('crm_contacts')->where('hn', 'like', '%' . $request->input('seachtext') . '%')
-                    ->whereRaw('adddate between "' . $startDate . '" and "' . $endDate . '"')
-                    ->get();
-            } else if ($request->input('seachtype') === "6") {
-                $datas = DB::table('crm_contacts')->where('fname', 'like', '%' . $request->input('seachtext') . '%')
-                    ->whereRaw('adddate between "' . $startDate . '" and "' . $endDate . '"')
-                    ->get();
+            $numberOfRows = 2;
+            $datas = [];
+
+            $name = ['วิเชียร เก่งอ่าง', 'สมชาย มงคล','สมหญิง เก่งอ่าง','วิเชียร ศรีสุข','วิเชียร มงคล'];
+            $rivrno = ['2024-01-18 00:00:00 - 2024-01-25 23:59:59', '2024-01-19 00:00:00 - 2024-01-20 23:59:59'];
+
+            for ($i = 1; $i <= $numberOfRows; $i++) {
+
+                //$ivrno  = $rivrno[array_rand($rivrno)];
+                //$createDate = now()->subDays(rand(1, 365))->subHours(rand(0, 23))->subMinutes(rand(0, 59));
+
+                $datas[] = (object) [
+                    'id' => $i,
+                    'fname' => $name[$i-1],
+                    'status' => 1,
+                ];
             }
 
             return datatables()->of($datas)
@@ -90,11 +67,6 @@ class MemberController extends Controller
                     return $row->fname . ' ' . $row->lname;
                 })
                 ->addColumn('action', function ($row) {
-                    if (Gate::allows('contact-edit')) {
-                        $html = '<button type="button" class="btn btn-sm btn-success btn-success" id="getCases" data-id="' . $row->id . '"><i class="fa fa-edit"></i> เรื่องที่ติดต่อ</button> ';
-                    } else {
-                        $html = '<button type="button" class="btn btn-sm btn-success disabled" data-toggle="tooltip" data-placement="bottom" title="คุณไม่มีสิทธิ์ในส่วนนี้"><i class="fa fa-edit"></i> แก้ไข</button> ';
-                    }
                     if (Gate::allows('contact-edit')) {
                         $html .= '<button type="button" class="btn btn-sm btn-warning btn-edit" id="getEditData" data-id="' . $row->id . '"><i class="fa fa-edit"></i> แก้ไข</button> ';
                     } else {
@@ -112,9 +84,7 @@ class MemberController extends Controller
                 })->rawColumns(['checkbox', 'action'])->toJson();
         }
 
-        $centre = Department::where([['status', '1']])
-            ->orderBy("name", "asc")->get();
-        return view('contacts.index')->with(['centre' => $centre]);
+        return view('contacts.index');
     }
 
     public function popup_content(Request $request)

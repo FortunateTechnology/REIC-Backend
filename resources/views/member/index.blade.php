@@ -150,13 +150,8 @@
                                                     <th width="5%"><input type="checkbox" id="check-all"
                                                             class="flat">
                                                     </th>
-                                                    <th>รหัสผู้ติดต่อ</th>
-                                                    <th>ชื่อผู้ติดต่อ</th>
-                                                    <th>เบอร์โทรศัพท์บ้าน</th>
-                                                    <th>เบอร์โทรศัพท์มือถือ</th>
-                                                    <th>วันที่บันทึก</th>
+                                                    <th>ชื่อนามสกุล</th>
                                                     <th width="120px"></th>
-                                                    <th>More</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
