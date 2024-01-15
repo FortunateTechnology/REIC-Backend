@@ -1,20 +1,28 @@
 <div class="modal fade" id="CreateModal">
-    <div class="modal-dialog modal-xxl">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header bg-primary">
-                <h4 class="modal-title"><i class="fas fa-graduation-cap"></i>Create Parent</h4>
+                <h4 class="modal-title"><i class="fas fa-address-book"></i> เพิ่ม รายชื่อผู้ติดต่อ</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-
+                {{-- @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <strong>Whoops!</strong>Something went wrong.<br><br>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif --}}
                 <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;">
                     <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-
                 <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;">
 
                     <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
@@ -23,212 +31,327 @@
                 </div>
 
 
-
                 {{-- 'route' => 'users.store', --}}
                 {!! Form::open(['method' => 'POST', 'class' => 'form']) !!}
 
-                <form action="{{ route('parent.store') }}" method="POST">
-                    @csrf
-                    <div class="card card-success card-tabs">
-                        <div class="card-header p-0 pt-1">
-                            <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill"
-                                        href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home"
-                                        aria-selected="true">Parent Detail</a>
-                                </li>
-                            </ul>
-                        </div>
+                <div class="card card-success card-tabs">
+                    <div class="card-header p-0 pt-1">
+                        <ul class="nav nav-tabs" id="custom-tabs-one-tabp" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill"
+                                    href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home"
+                                    aria-selected="true">ข้อมูลผู้ติดต่อ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="custom-tabs-one-address-tab" data-toggle="pill"
+                                    href="#custom-tabs-one-address" role="tab"
+                                    aria-controls="custom-tabs-one-address" aria-selected="false">ข้อมูลที่อยู่</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill"
+                                    href="#custom-tabs-one-profile" role="tab"
+                                    aria-controls="custom-tabs-one-profile" aria-selected="false">ข้อมูลเบอร์ติดต่อ</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" id="custom-tabs-one-tabContent">
+                            <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
+                                aria-labelledby="custom-tabs-one-home-tab">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
 
-
-                        <div class="card-body">
-
-                            <div class="alert alert-danger" id="danger_validate" role="alert" style="display: none;">
-
-                            </div>
-
-                            <div class="tab-content" id="custom-tabs-one-tabContent">
-                                <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
-                                    aria-labelledby="custom-tabs-one-home-tab">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                                    <div class="form-group">
-                                                        <strong><i class="fas fa-code"></i> Centre Code:</strong>
-                                                        <select style="width: 100%;"
-                                                            class="productl select2 select2_single form-control"
-                                                            id="AddCentre" name="centre_id" multiple="multiple"
-                                                            @cannot('all-centre') disabled @endcannot>
-                                                            <!-- <option value="" selected>Select Student</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="" selected>Select Parent</option>-->
-                                                            @foreach ($centre as $key2)
-                                                                <option value="{{ $key2->id }}"
-                                                                    @if (Auth::user()->department->id == (int) $key2->id) selected @endif>
-                                                                    {{-- {{ $key2->code }} --}}
-                                                                    {{ $key2->name }}
-                                                                </option>
-                                                            @endforeach
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                                    <div class="form-group">
-                                                        <strong><i class="fas fa-code"></i> Student No.</strong>
-
-                                                        <select name="student"
-                                                            id="s_student"class="select2 select2_multiple form-control s_student"
-                                                            multiple="multiple">
-                                                            <option value="">select student</option>
-
-                                                        </select>
-                                                    </div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fas fa-code"></i> รหัสผู้ติดต่อ.</strong>
+                                                    {!! Form::text('hn', null, [
+                                                        'id' => 'Addhn',
+                                                        'placeholder' => 'รหัสผู้ติดต่อ',
+                                                        'class' => 'form-control',
+                                                        //'readonly' => true,
+                                                    ]) !!}
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                                    <div class="form-group">
-                                                        <strong><i class="fas fa-calendar"></i> First Name
-                                                            (ชื่อจริง):</strong>
-                                                        <input type="text" name="fname" id="AddFname"
-                                                            class="form-control" autocomplete="off" placeholder="Enter Parent Name">
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                                    <div class="form-group">
-                                                        <strong><i class="fas fa-calendar"></i>Last Name
-                                                            (นามสกุล):</strong>
-                                                        <input type="text" name="lname" id="AddLname"
-                                                            class="form-control" autocomplete="off" placeholder="Enter Parent Last Name">
-
-                                                    </div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fas fa-calendar"></i> วันที่บันทึก:</strong>
+                                                    {!! Form::text('adddate', null, [
+                                                        'id' => 'Addadddate',
+                                                        'placeholder' => 'วันที่บันทึก',
+                                                        'class' => 'AddDate form-control',
+                                                        'data-target' => '#reservationdate',
+                                                    ]) !!}
                                                 </div>
                                             </div>
-
-                                            <div class="row">
-                                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                                    <div class="form-group">
-                                                        <strong><i class="fas fa-calendar"></i> Telp.
-                                                            (เบอร์โทรศัพท์):</strong>
-                                                        <input type="text" name="telp" id="AddTelp"
-                                                            class="form-control" autocomplete="off" placeholder="Enter Parent telphone">
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                                    <div class="form-group">
-                                                        <strong><i class="fas fa-calendar"></i>Email
-                                                            (อีเมลล์):</strong>
-                                                        <input type="text" name="email" id="AddEmail"
-                                                            class="form-control" autocomplete="off" placeholder="Enter Parent Email">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                                    <div class="form-group">
-                                                        <strong><i class="fas fa-calendar"></i> Emergency
-                                                            Contact(เบอร์ติดต่อด่วน)</strong>
-                                                        <input type="text" name="emergency_contact"
-                                                            id="AddEmergency" class="form-control"
-                                                            autocomplete="off" placeholder="Enter Emergency Contact">
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <strong><i class="fas fa-calendar"></i>Relationship
-                                                                (ความสัมพันธ์):</strong>
-                                                            <select name="relationship" id="AddRelationship"
-                                                                class="form-control">
-                                                                <option value="">Select Relation</option>
-                                                                <option value="father">Father</option>
-                                                                <option value="mother">Mother</option>
-                                                                <option value="relative">Relative</option>
-                                                                <option value="other">Other</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <strong class="mb-5"><i
-                                                                    class="fas fa-calendar"></i>Gender (เพศ):
-                                                            </strong>
-                                                            <div class="row">
-                                                                <div class="col-lg-6">
-                                                                    <label>
-                                                                        <input type="radio" name="gender"
-                                                                            id="male" value="male"> Male
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-lg-6">
-                                                                    <label>
-                                                                        <input type="radio" name="gender"
-                                                                            id="female" value="female"> Female
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
+                                        </div>
+                                        <div class="row">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fas fa-user-tie"></i> คำนำหน้าชื่อ:</strong>
+                                                    <select style="width: 100%;"
+                                                        class="select2 form-control"
+                                                        id="Addtname" name="Addtname">
+                                                        <option value="">กรุณาเลือก</option>
+                                                        <option value="คุณ">คุณ</option>
+                                                        <option value="เด็กชาย">เด็กชาย</option>
+                                                        <option value="เด็กหญิง">เด็กหญิง</option>
+                                                        <option value="นาย">นาย</option>
+                                                        <option value="นาง">นาง</option>
+                                                        <option value="นางสาว">นางสาว</option>
+                                                    </select>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                                    <div class="form-group">
-                                                        <strong><i class="fas fa-calendar"></i> Address:</strong>
-                                                        <textarea name="address" id="AddAddress" rows="5" class="form-control" placeholder="Enter Address"></textarea>
-
-                                                    </div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fas fa-user-tie"></i> ชื่อ:</strong>
+                                                    {!! Form::text('fname', null, ['id' => 'Addfname', 'placeholder' => 'ชื่อ', 'class' => 'form-control']) !!}
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                                    <div class="form-group">
-                                                        <strong><i class="fas fa-calendar"></i>Orther Details
-                                                            :</strong>
-                                                        <textarea name="notes" id="AddNotes" rows="5" class="form-control" placeholder="Enter Detail"></textarea>
-
-                                                    </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fas fa-user-tie"></i> นามสกุล:</strong>
+                                                    {!! Form::text('lname', null, ['id' => 'Addlname', 'placeholder' => 'นามสกุล', 'class' => 'form-control']) !!}
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                @error('password')
-                                                    <div class="alert alert-danger">{{ $message }}</div>
-                                                @enderror
-                                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                                    <div class="form-group">
-                                                        <strong><i class="fas fa-calendar"></i>Password.
-                                                            (รหัสผ่าน):</strong>
-                                                        <input type="password" name="password" id="AddPassword"
-                                                            class="form-control" autocomplete="off"  placeholder="Enter Password">
-
-                                                    </div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fas fa-user-tie"></i> เพศ:</strong>
+                                                    <select style="width: 100%;"
+                                                        class="select2 form-control"
+                                                        id="Addsex" name="Addsex">
+                                                        <option value="">กรุณาเลือก</option>
+                                                        <option value="ชาย">ชาย</option>
+                                                        <option value="หญิง">หญิง</option>
+                                                    </select>
                                                 </div>
-                                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                                    <div class="form-group">
-                                                        <strong><i class="fas fa-calendar"></i>Conf Password. (ยืนยัน
-                                                            รหัสผ่าน):</strong>
-                                                        <input type="password" name="password_confirmation" id="password_confirmation"
-                                                            class="form-control" autocomplete="off" placeholder="Enter Confirm Password">
-                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fas fa-user-tie"></i> วันเกิด:</strong>
+                                                    {!! Form::text('addbirthday', null, [
+                                                        'id' => 'Addbirthday',
+                                                        'data-age' => 'Addage',
+                                                        'placeholder' => 'วันเกิด',
+                                                        'class' => 'AddDate form-control',
+                                                        'data-target' => '#reservationdate',
+                                                    ]) !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fas fa-user-tie"></i> อายุ:</strong>
+                                                    {!! Form::text('Addage', null, ['id' => 'Addage', 'placeholder' => 'อายุ', 'class' => 'form-control','readonly' => true]) !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fas fa-user-tie"></i> กรุ๊ปเลือด:</strong>
+                                                    <select style="width: 100%;"
+                                                        class="select2 form-control"
+                                                        id="Addbloodgroup" name="Addbloodgroup">
+                                                        <option value="">กรุณาเลือก</option>
+                                                        <option value="A">A</option>
+                                                        <option value="B">B</option>
+                                                        <option value="AB">AB</option>
+                                                        <option value="O">O</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="tab-pane fade" id="custom-tabs-one-address" role="tabpanel"
+                                aria-labelledby="custom-tabs-one-address-tab">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fas fa-home"></i> บ้านเลขที่:</strong>
+                                                    {!! Form::text('homeno', null, [
+                                                        'id' => 'Addhomeno',
+                                                        'placeholder' => 'บ้านเลขที่',
+                                                        'class' => 'form-control',
+                                                    ]) !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fa-solid fa-people-roof"></i> หมู่:</strong>
+                                                    {!! Form::text('moo', null, [
+                                                        'id' => 'Addmoo',
+                                                        'placeholder' => 'หมู่',
+                                                        'class' => 'form-control',
+                                                    ]) !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fa-solid fa-people-roof"></i> ซอย :</strong>
+                                                    {!! Form::text('soi', null, [
+                                                        'id' => 'Addsoi',
+                                                        'placeholder' => 'ซอย',
+                                                        'class' => 'form-control',
+                                                    ]) !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fas fa-road"></i> ถนน :</strong>
+                                                    {!! Form::text('road', null, [
+                                                        'id' => 'Addroad',
+                                                        'placeholder' => 'ถนน',
+                                                        'class' => 'form-control',
+                                                    ]) !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fa-solid fa-city"></i> จังหวัด :</strong>
+                                                    <select class="select2 form-control" id="Addcity"
+                                                        name="city">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fa-solid fa-building-circle-arrow-right"></i>
+                                                        อำเภอ:</strong>
+                                                    <select class="select2 form-control" id="Adddistrict"
+                                                        name="district">
+                                                        <option value="">กรุณาเลือกอำเภอ</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fa-solid fa-building-circle-arrow-right"></i>
+                                                        ตำบล
+                                                        :</strong>
+                                                    <select class="select2 form-control" id="Addsubdistrict"
+                                                        name="subdistrict">
+                                                        <option value="">กรุณาเลือกตำบล</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fas fa-code"></i> รหัสไปรษณีย์:</strong>
+                                                    {!! Form::text('postcode', null, [
+                                                        'id' => 'Addpostcode',
+                                                        'placeholder' => 'รหัสไปรษณีย์',
+                                                        'class' => 'form-control',
+                                                    ]) !!}
+                                                </div>
+                                            </div>
+                                        </div>
 
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel"
+                                aria-labelledby="custom-tabs-one-profile-tab">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fas fa-phone"></i> เบอร์โทรศัพท์บ้าน:</strong>
+                                                    {!! Form::text('telhome', null, [
+                                                        'id' => 'Addtelhome',
+                                                        'placeholder' => 'เบอร์โทรศัพท์บ้าน',
+                                                        'class' => 'form-control',
+                                                        'onkeydown' => 'validateNumber(event)',
+                                                    ]) !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fas fa-phone"></i> เบอร์โทรศัพท์มือถือ :</strong>
+                                                    {!! Form::text('phoneno', null, [
+                                                        'id' => 'Addphoneno',
+                                                        'placeholder' => 'เบอร์โทรศัพท์มือถือ',
+                                                        'class' => 'form-control',
+                                                        'onkeydown' => 'validateNumber(event)',
+                                                    ]) !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <strong><i class="fas fa-phone"></i>
+                                                        เบอร์โทรศัพท์ที่ทำงาน:</strong>
+                                                    {!! Form::text('workno', null, [
+                                                        'id' => 'Addworkno',
+                                                        'placeholder' => 'เบอร์โทรศัพท์ที่ทำงาน',
+                                                        'class' => 'form-control',
+                                                        'onkeydown' => 'validateNumber(event)',
+                                                    ]) !!}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <table id="myTbl3"
+                                                    class="table table-striped table-bordered responsive-utilities jambo_table "
+                                                    width="400">
+                                                    <thead>
+                                                        <tr class="headings">
+                                                            <th class="column-title">
+                                                                ชื่อบุคคลที่ติดต่อได้ในกรณีฉุกเฉิน<input type="hidden" value="" name="checkemer" id="Addcheckemer"></th>
+                                                            <th class="column-title"> ความสัมพันธ์</th>
+                                                            <th class="column-title"> เบอร์โทรศัพท์</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-md-12" align="right">
+
+                                                <button type="button" id="addRowBtn"
+                                                    class="btn btn-primary btnAddg"><i class="fa-solid fa-plus"></i> เพิ่มบุคคลที่ติดต่อได้ในกรณีฉุกเฉิน</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </form>
 
+                </div>
+
+
+                {!! Form::close() !!}
             </div>
             <div class="modal-footer {{-- justify-content-between --}}">
                 <button type="button" class="btn btn-success" id="SubmitCreateForm"><i class="fas fa-download"></i>
-                    Save </button>
+                    บันทึกข้อมูล</button>
                 <button type="button" class="btn btn-danger modelClose" data-dismiss="modal"><i
-                        class="fas fa-door-closed"></i> Close</button>
+                        class="fas fa-door-closed"></i> ปิดหน้าต่าง</button>
             </div>
         </div>
     </div>

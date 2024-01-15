@@ -1,93 +1,68 @@
+@php
+    $detect = new Detection\MobileDetect();
+@endphp
 <script>
     $(document).ready(function() {
-
-        $("#timepicker").timepicker();
-        $(".timepicker").timepicker({
-            timeFormat: 'hh:mm tt', // Display format
-            // dateFormat: 'yy-mm-dd', // Date format
-            showButtonPanel: true, // Show the "Now" and "Done" buttons
-            controlType: 'select'
-        });
-
-        $('#datetimepicker').timepicker({
-            timeFormat: 'hh:mm tt', // Display format
-            // dateFormat: 'yy-mm-dd', // Date format
-            showButtonPanel: true, // Show the "Now" and "Done" buttons
-            controlType: 'select' // Use select menus for hours and minutes
-        });
-
-        function showOverlay() {
-            $('#overlay').css({
-                'display': 'flex',
-                'justify-content': 'center', // Center horizontally
-                'align-items': 'center' // Center vertically
-            });
-        }
-
-        function hideOverlay() {
-            $('#overlay').css('display', 'none');
-        }
+        $("#etm").val(1).trigger("change")
+        $("#eam").val(1).trigger("change")
+        $("#ecity").val(1).trigger("change")
 
         $(".delete_all_button").click(function() {
             var len = $('input[name="table_records[]"]:checked').length;
             if (len > 0) {
-                if (confirm("Confirm data deletion?")) {
+
+                if (confirm("ยืนยันการลบข้อมูล ?")) {
                     $('form#delete_all').submit();
                 }
             } else {
-                alert("Please select items to delete.");
+                alert("กรุณาเลือกรายการที่จะลบ");
             }
+
         });
 
         $('#check-all').click(function() {
             $(':checkbox.flat').prop('checked', this.checked);
         });
-        //
-
-        const discontinuedCheckbox = $('#ecustomCheckbox1');
-        const editDDateInput = $('#EditDDate');
-        const editReasonInput = $('#EditReason');
-        const sreasonSection = $('#sreason');
-
-        // Add an event listener to the checkbox using jQuery
-        discontinuedCheckbox.on('change', function() {
-            // Enable/disable the inputs based on the checkbox state
-            editDDateInput.prop('disabled', !this.checked);
-            editReasonInput.prop('disabled', !this.checked);
-            if (this.checked) {
-                sreasonSection.removeClass('d-none');
-                if (editDDateInput.val() === "" || editDDateInput.val() ===
-                    null) {
-                    const currentDate = new Date().toISOString().split('T')[0];
-                    $('#EditDDate').val(currentDate);
-                }
-            } else {
-                sreasonSection.addClass('d-none');
-                $('#EditDDate').val('');
-                $('#EditReason').val('');
-            }
-        });
-
-        $('#ddl_discontinueReason').on('change', function() {
-            const selectedReason = $(this).val();
-            $('#EditReason').val(selectedReason);
-        });
-
 
         $(".select2_single").select2({
             maximumSelectionLength: 1,
-            allowClear: false,
+            allowClear: true,
             //theme: 'bootstrap4'
-            placeholder: 'Please select'
+            placeholder: 'กรุณาเลือก'
         });
-        $(".select3_single").select2({
+        $(".select2_single2").select2({
             maximumSelectionLength: 1,
-            allowClear: false,
+            allowClear: true,
             //theme: 'bootstrap4'
-            placeholder: 'select student'
+            placeholder: 'กรุณาเลือก'
+        });
+        $(".select2_single3").select2({
+            maximumSelectionLength: 1,
+            allowClear: true,
+            //theme: 'bootstrap4'
+            placeholder: 'กรุณาเลือก'
+        });
+        $(".select2_singlee").select2({
+            maximumSelectionLength: 1,
+            allowClear: true,
+            //theme: 'bootstrap4'
+            placeholder: 'กรุณาเลือก'
+        });
+        $(".select2_singlee2").select2({
+            maximumSelectionLength: 1,
+            allowClear: true,
+            //theme: 'bootstrap4'
+            placeholder: 'กรุณาเลือก'
+        });
+        $(".select2_singlee3").select2({
+            maximumSelectionLength: 1,
+            allowClear: true,
+            //theme: 'bootstrap4'
+            placeholder: 'กรุณาเลือก'
         });
 
         $(".select2_single").on("select2:unselect", function(e) {
+            //log("select2:unselect", e);
             //$('.products').html('');
         });
 
@@ -95,21 +70,35 @@
             maximumSelectionLength: 1,
             allowClear: false,
             //theme: 'bootstrap4'
-            placeholder: 'Please select'
+            placeholder: 'กรุณาเลือก'
         });
 
         $(".select2_singlec").select2({
             maximumSelectionLength: 1,
             allowClear: false,
             //theme: 'bootstrap4'
-            placeholder: 'Please select'
+            placeholder: 'กรุณาเลือก'
         });
 
+
         $(".select2_multiple").select2({
-            // maximumSelectionLength: 2,
+            maximumSelectionLength: 2,
+            //placeholder: "With Max Selection limit 4",
             allowClear: false,
             //theme: 'bootstrap4'
-            placeholder: 'Please select'
+            placeholder: 'กรุณาเลือก'
+        });
+
+        //$(".AddDate").datepicker({
+        //    dateFormat: "yy-mm-dd"
+        //});
+
+        //$.noConflict();
+        var token = ''
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
         });
 
         var startDate;
@@ -118,8 +107,16 @@
         function datesearch() {
             var currentDate = moment();
             // Set the start date to 7 days before today
-            startDate = moment(currentDate).subtract(7, 'days').format('YYYY-MM-DD');
+            //startDate = moment(currentDate).subtract(15, 'days').format('YYYY-MM-DD');
             // Set the end date to the end of the current month
+            //endDate = moment(currentDate).endOf('month').format('YYYY-MM-DD');
+            startDate = moment().format('YYYY-MM-DD');
+            endDate = moment(currentDate).endOf('month').format('YYYY-MM-DD');
+        }
+
+        function datereset() {
+            var currentDate = moment();
+            startDate = moment().format('YYYY-MM-DD');
             endDate = moment(currentDate).endOf('month').format('YYYY-MM-DD');
         }
 
@@ -136,193 +133,188 @@
             } else {
                 datesearch();
             }
-            if (savedSearchType) {
-                $('#search_type').val(savedSearchType);
-            }
-            if (savedKeyword) {
-                $('#keyword').val(savedKeyword);
-            }
         }
-        // Call the function to set initial field values on page load
-        retrieveFieldValues();
+
         let daterange = () => {
+            moment.locale('th');
             $('#reservation').daterangepicker({
                 startDate: startDate,
                 endDate: endDate,
+                ranges: {
+                    'วันนี้': [moment(), moment()],
+                    'เมื่อวานนี้': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'ย้อนหลัง 7 วัน': [moment().subtract(6, 'days'), moment()],
+                    'ย้อนหลัง 30 วัน': [moment().subtract(29, 'days'), moment()],
+                    'เดือนนี้': [moment().startOf('month'), moment().endOf('month')],
+                    'เดือนที่แล้ว': [moment().subtract(1, 'month').startOf('month'), moment()
+                        .subtract(1, 'month').endOf('month')
+                    ]
+                },
                 locale: {
-                    format: 'YYYY-MM-DD'
+                    format: 'YYYY-MM-DD',
+                    applyLabel: 'ตกลง',
+                    cancelLabel: 'ยกเลิก',
+                    fromLabel: 'จาก',
+                    toLabel: 'ถึง',
+                    customRangeLabel: 'เลือกวันที่เอง',
+                    daysOfWeek: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
+                    monthNames: [
+                        'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+                        'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+                    ],
+                    firstDay: 1
                 }
             });
             // Apply the custom date range filter on input change
             $('#reservation').on('apply.daterangepicker', function() {
+                console.log($('#reservation').val())
                 table.draw();
                 storeFieldValues();
             });
         }
-
+        datesearch();
         daterange();
 
-        $.datepicker.setDefaults($.datepicker.regional['en']);
+        $.datepicker.setDefaults($.datepicker.regional['th']);
         $(".AddDate").datepicker({
-            /*  onSelect: function() {
-                 table.draw();
-             }, */
-            dateFormat: 'yy-mm-dd',
+            dateFormat: "yy-mm-dd",
+            //defaultDate: '2023-11-14',
+            isBuddhist: true,
             changeMonth: true,
             changeYear: true,
-            yearRange: '1980:2050'
-        });
+            //yearRange:'1940:2057',
+            yearRange: '1930:2050',
+            dayNamesMin: ["อา", "จ", "อ", "พ", "พฤ", "ศ", "ส"],
+            monthNamesShort: ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+                "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+            ],
+            beforeShow: function() {
+                if ($(this).val() != "") {
+                    var arrayDate = $(this).val().split("-");
+                    arrayDate[0] = parseInt(arrayDate[0]) - 543;
+                    $(this).val(arrayDate[0] + "-" + arrayDate[1] + "-" + arrayDate[2]);
+                    dateBefore = $(this).val();
+                }
+                setTimeout(function() {
+                    $.each($(".ui-datepicker-year option"), function(j, k) {
+                        var textYear = parseInt($(".ui-datepicker-year option").eq(
+                            j).val()) + 543;
+                        $(".ui-datepicker-year option").eq(j).text(textYear);
+                    });
+                }, 50);
 
-        //$.noConflict();
-        var token = ''
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $(".s_student").change(function() {
-            let std_id = $('#s_student').val();
-            //console.log(product);
-            //alert(product);
-            $('#AddLevel').html('');
-            $('#AddTerm').html('');
-            // $('#AddBook').html('');
-            if (std_id.length !== 0) {
-                $.ajax({
-                    method: "GET",
-                    url: "student/find/add/" + std_id,
-                    success: function(res) {
-                        $('.level_id').html(res.html);
-                        //$('.terms').removeAttr('readonly');
-                        $('.level_id').prop('disabled', false);
-                    }
-                });
-            }
-        })
-        $(".level_id").change(function() {
-            let level = $('#AddLevel').val();
-            //console.log(product);
-            //alert(product);
-            $('#AddTerm').html('');
-            // $('#AddBook').html('');
-            // console.log(level);
-            if (level.length !== 0) {
-                $.ajax({
-                    method: "GET",
-                    url: "level/find/add/" + level,
-                    success: function(res) {
-                        $('.terms').html(res.html);
-                        //$('.terms').removeAttr('readonly');
-                        $('.terms').prop('disabled', false);
-                    }
-                });
-            }
-        })
-        $(".terms").change(function() {
-            let level = $('#AddLevel').val();
-            let term = $('#AddTerm').val();
-            // $('#AddBook').html('');
-            if (level.length !== 0 && term.length !== 0) {
-                $.ajax({
-                    method: "GET",
-                    url: "term/find/add/" + level + "/" + term,
-                    async: false,
-                    success: function(res) {
-                        //console.log(res)
-                        $('.books').html(res.html);
-                        $('.books').prop('disabled', false);
-                    }
-                });
-            }
-        })
-
-        $(".elevels").change(function() {
-            let level = $('#EditLevel').val();
-            //console.log(product);
-            //alert(product);
-            $('#EditTerm').html('');
-            $('#EditBook').html('');
-            if (level.length !== 0) {
-                $.ajax({
-                    method: "GET",
-                    url: "level/find/add/" + level,
-                    success: function(res) {
-                        $('.eterms').html(res.html);
-                        //$('.terms').removeAttr('readonly');
-                        $('.eterms').prop('disabled', false);
-                    }
-                });
-            }
-        })
-
-        $(".eterms").change(function() {
-            let level = $('#EditLevel').val();
-            let term = $('#EditTerm').val();
-            $('#EditBook').html('');
-            if (level.length !== 0 && term.length !== 0) {
-                $.ajax({
-                    method: "GET",
-                    url: "term/find/add/" + level + "/" + term,
-                    async: false,
-                    success: function(res) {
-                        //console.log(res)
-                        $('.ebooks').html(res.html);
-                        $('.ebooks').prop('disabled', false);
-                    }
-                });
-            }
-        })
-
-        const table_option = {
-            ajax: {
-                data: function(d) {
-                    d.sdate = $('#reservation').val();
-                    //d.search = $('input[type="search"]').val();
+            },
+            onChangeMonthYear: function() {
+                setTimeout(function() {
+                    $.each($(".ui-datepicker-year option"), function(j, k) {
+                        var textYear = parseInt($(".ui-datepicker-year option").eq(
+                            j).val()) + 543;
+                        $(".ui-datepicker-year option").eq(j).text(textYear);
+                    });
+                }, 50);
+            },
+            onClose: function(dateText, inst) {
+                if ($(this).val() != "" && dateText == dateBefore) {
+                    var arrayDate = dateText.split("-");
+                    //$('#temp'+$(this).attr('id')).html(dateBefore);
+                    arrayDate[0] = parseInt(arrayDate[0]) + 543;
+                    $(this).val(arrayDate[0] + "-" + arrayDate[1] + "-" + arrayDate[2]);
                 }
             },
+            /*onClose: function() {
+                if ($(this).val() != "" && $(this).val() == dateBefore) {
+                    var arrayDate = dateBefore.split("-");
+                    //$('#temp'+$(this).attr('id')).html(dateBefore);
+                    arrayDate[0] = parseInt(arrayDate[0]) + 543;
+                    $(this).val(arrayDate[0] + "-" + arrayDate[1] + "-" + arrayDate[2]);
+                }
+            },*/
+            /*onBlur: function(dateText, inst) {
+                if ($(this).val() != "") {
+                    var arrayDate = dateBefore.split("-");
+                    //$('#temp'+$(this).attr('id')).html(dateBefore);
+                    arrayDate[0] = parseInt(arrayDate[0]) + 543;
+                    $(this).val(arrayDate[0] + "-" + arrayDate[1] + "-" + arrayDate[2]);
+                }
+            },*/
+            onSelect: function(dateText, inst) {
+                dateBefore = $(this).val();
+                //$('#temp'+$(this).attr('id')).html(dateBefore);
+                var arrayDate = dateText.split("-");
+                arrayDate[0] = parseInt(arrayDate[0]) + 543;
+                $(this).val(arrayDate[0] + "-" + arrayDate[1] + "-" + arrayDate[2]);
 
+                var selectedDate = new Date(dateText);
+                var currentDate = new Date();
+                var years = currentDate.getFullYear() - selectedDate.getFullYear();
+                var months = currentDate.getMonth() - selectedDate.getMonth();
+                var days = currentDate.getDate() - selectedDate.getDate();
+                if (days < 0) {
+                    months--;
+                    days += new Date(currentDate.getFullYear(), currentDate.getMonth(), 0).getDate();
+                }
+
+                if (months < 0) {
+                    years--;
+                    months += 12;
+                }
+                $("#"+$(this).data('age')).val(years + " ปี " + months + " เดือน " + days + " วัน"); 
+                }
+        });
+
+        var table = $('#Listview').DataTable({
+            ajax: {
+                data: function(d) {
+                    d.seachtype = $("#seachtype").val();
+                    d.seachtext = $("#seachtext").val();
+                    d.sdate = $('#reservation').val();
+                }
+            },
             serverSide: true,
             processing: true,
+            searching: false,
             language: {
                 loadingRecords: '&nbsp;',
                 processing: `<div class="spinner-border text-primary"></div>`,
-                "sProcessing": "Processing...",
-                "sLengthMenu": "Display _MENU_ Row",
-                "sZeroRecords": "No Data Found",
-                "sInfo": "Display _START_ To _END_ From _TOTAL_ Records",
-                "sInfoEmpty": "Display 0 To 0 From 0 Records",
-                "sInfoFiltered": "(Filters _MAX_ Row)",
+                "sProcessing": "กำลังดำเนินการ...",
+                "sLengthMenu": "แสดง_MENU_ แถว",
+                "sZeroRecords": "ไม่พบข้อมูล",
+                "sInfo": "แสดง _START_ ถึง _END_ จาก _TOTAL_ รายการ",
+                "sInfoEmpty": "แสดง 0 ถึง 0 จาก 0 รายการ",
+                "sInfoFiltered": "(กรองข้อมูล _MAX_ ทุกแถว)",
                 "sInfoPostFix": "",
-                "sSearch": "Search:",
+                "sSearch": "ค้นหา:",
                 "sUrl": "",
                 "oPaginate": {
-                    "sFirst": "First",
-                    "sPrevious": "Previous",
-                    "sNext": "Next",
-                    "sLast": "Last"
+                    "sFirst": "เริ่มต้น",
+                    "sPrevious": "ก่อนหน้า",
+                    "sNext": "ถัดไป",
+                    "sLast": "สุดท้าย"
                 }
             },
             aaSorting: [
                 [0, "desc"]
             ],
-            //searching: false,
-            iDisplayLength: 10,
-            lengthMenu: [10, 25, 50, 75, 100],
+            iDisplayLength: 5,
+            lengthMenu: [5, 10, 25, 50, 75, 100],
             stateSave: true,
             autoWidth: false,
             fixedHeader: true,
-            responsive: {
-                details: {
-                    type: 'column',
-                    target: 'tr'
-                }
-            },
-            columnDefs: [{
-                className: 'control',
-                orderable: false,
-                targets: -1
-            }],
+            @if ($detect->isMobile())
+                responsive: true,
+            @else
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: 'tr'
+                    }
+                },
+                columnDefs: [{
+                    className: 'control',
+                    orderable: false,
+                    targets: -1
+                }],
+            @endif
             sPaginationType: "full_numbers",
             dom: 'T<"clear">lfrtip',
             columns: [{
@@ -331,30 +323,25 @@
                     orderable: false,
                     searchable: false
                 },
-
                 {
-                    data: 'centre',
-                    name: 'centre'
+                    data: 'hn',
+                    name: 'hn'
                 },
                 {
-                    data: 'parent_name',
-                    name: 'parent_name'
+                    data: 'fname',
+                    name: 'fname'
                 },
                 {
-                    data: 'parent_telp',
-                    name: 'parent_telp'
+                    data: 'telhome',
+                    name: 'telhome'
                 },
                 {
-                    data: 'relationship',
-                    name: 'relationship'
+                    data: 'phoneno',
+                    name: 'phoneno'
                 },
                 {
-                    data: 'student_name',
-                    name: 'student_name'
-                },
-                {
-                    data: 'emergency_contact',
-                    name: 'emergency_contact'
+                    data: 'adddate',
+                    name: 'adddate'
                 },
                 {
                     data: 'action',
@@ -365,150 +352,92 @@
                     name: 'more'
                 }
             ]
-        };
-        var table = $('#Listview').DataTable(table_option);
+        });
 
-        $('#SearchButtons').on('click', function() {
-            var searchType = $('#search_type').val();
-            var keyword = $('#keyword').val();
-
-            if (searchType !== '' && keyword !== '') {
-                // Clear the previous search and any custom filters
-                table.search('').draw();
-                $.fn.dataTable.ext.search.pop(); // Remove the custom date range filter
-
-                // Apply the new search based on searchType and keyword
-                if (searchType === '1') {
-                    table.column(2).search(keyword).draw();
-                } else if (searchType === '2') {
-                    table.column(3).search(keyword).draw();
-                } else if (searchType === '3') {
-                    table.column(14).search(keyword).draw();
-                } else if (searchType === '4') {
-                    table.column(15).search(keyword).draw();
-                } else if (searchType === '5') {
-                    table.column(10).search(keyword).draw();
-                } else if (searchType === '6') {
-                    table.column(11).search(keyword).draw();
+        $('#btnsearch').click(function(e) {
+            var fieldValue = $("#seachtype").val();
+            var textValue = $("#seachtext").val();
+            if (fieldValue !== '0') {
+                if (textValue === '') {
+                    document.getElementById('validationMessages').textContent =
+                        'กรุณากรอกข้อมูลที่จะค้นหา';
+                    return false;
+                } else {
+                    document.getElementById('validationMessages').textContent = '';
                 }
             } else {
-                // Handle the case where searchType or keyword is empty
-                toastr.error('Please input Search Type and Keyword', {
-                    timeOut: 5000
-                });
+                document.getElementById('validationMessages').textContent = '';
             }
+            $('#Listview').DataTable().ajax.reload();
         });
-
-
-        // Attach event handler to a button or element to trigger the reset
-        $('#resetSearchButton').on('click', async function() {
-            localStorage.removeItem('dateStart');
-            localStorage.removeItem('searchType');
-            localStorage.removeItem('keyword');
-
-            // Set field values to empty
-            $('#search_type').val('');
-            $('#keyword').val('');
-
-            $('#Listview').html('');
-
-            // Clear DataTable state
-            if (table) {
-                table.state.clear();
-                await table.destroy();
-            }
-            // Set the date range back to its default
-            var currentDate = moment();
-            var startDate = moment(currentDate).subtract(7, 'days').format('YYYY-MM-DD');
-            var endDate = moment(currentDate).endOf('month').format('YYYY-MM-DD');
+        $('#btnreset').click(function(e) {
+            $("#seachtype").val(0);
+            $("#seachtext").val('');
+            document.getElementById('validationMessages').textContent = '';
+            datereset();
             daterange();
-            table = $('#Listview').DataTable(table_option);
-            table.draw();
+            $('#Listview').DataTable().ajax.reload();
+        });
+        $("#example1").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
         });
 
 
 
-        function storeFieldValues() {
-            var dateStart = $('#reservation').val();
-            var searchType = $('#search_type').val();
-            var keyword = $('#keyword').val();
-
-            // Store values in local storage
-            localStorage.setItem('dateStart', dateStart);
-            localStorage.setItem('searchType', searchType);
-            localStorage.setItem('keyword', keyword);
-        }
-
-        // Attach event handlers to the fields to store values when they change
-        $('#search_type').on('change', storeFieldValues);
-        $('#keyword').on('input', storeFieldValues);
-
-
-        $("#AddCentre").change(function() {
-            let centre = $('#AddCentre').val();
-            // console.log(centre);
-            if (centre.length !== 0) {
-                $.ajax({
-                    method: "GET",
-                    url: "histories/running/" + centre,
-                    async: false,
-                    success: function(res) {
-                        console.log(res)
-                        //$('#AddCode').prop('readonly', false);
-                        $('#s_student').html(res.html_std);
-                    }
-                });
-            }
-        })
-
-        if ($("#AddCentre").val() !== null) {
-            let centre = $('#AddCentre').val();
-            console.log(centre);
-            if (centre.length !== 0) {
-                $.ajax({
-                    method: "GET",
-                    url: "histories/running/" + centre,
-                    async: false,
-                    success: function(res) {
-                        console.log(res)
-                        //$('#AddCode').prop('readonly', false);
-                        $('#s_student').html(res.html_std);
-                    }
-                });
-            }
-        }
-
-
-        $(document).on('click', '#CreateButton', async function(e) {
+        $(document).on('click', '#CreateButton', function(e) {
             e.preventDefault();
             $('.alert-danger').html('');
             $('.alert-danger').hide();
             $('.alert-success').html('');
             $('.alert-success').hide();
-
-            $('#custom-tabs-one-home-tab').tab('show');
-            $('#AddSTerm').val(null).trigger("change");
-            // $('#AddBook').val(null).trigger("change");
-            $('#AddLevel').val(null).trigger("change")
-            $('#AddTerm').val(null).trigger("change")
-            var centre = 0;
-            var createUrl = "{{ route('create', ':centre') }}".replace(':centre', centre);
             $.ajax({
-                url: createUrl,
                 method: "GET",
-                success: function(response) {
-                    $('#AddCode').val(response.running);
-                    $('#AddTerm').prop('disabled', true);
-                    // $('#AddBook').prop('disabled', true);
-                    $('#s_student').html(response.html_std);
-                    console.log(response);
-                },
-                error: function(error) {
-                    console.error(error);
+                url: "{{ route('contacts.running') }}",
+                success: function(res) {
+                    console.log(res)
+                    $('#AddCode').val(res.running);
                 }
             });
-            $('#CreateModal').modal('show');
+            $.ajax({
+                url: "{{ route('thcity.city') }}",
+                method: 'GET',
+                success: function(res) {
+                    //alert(res.data.code);
+                    var provinceOb = $('#Addcity');
+                    provinceOb.html('<option value="">เลือกจังหวัด</option>');
+                    $.each(res.data, function(index, item) {
+                        provinceOb.append(
+                            $('<option></option>').val(item.code).html(item
+                                .name_th)
+                        );
+                    });
 
+                    setTimeout(function() {
+                        $('#Addcity').val('65');
+                        $('#Addcity').change();
+                    }, 1000)
+
+                }
+            });
+            var tbody = document.querySelector('#myTbl3 tbody');
+            var rows = tbody.querySelectorAll('tr');
+            for (var i = 1; i < rows.length; i++) {
+                tbody.removeChild(rows[i]);
+            }
+            $('#custom-tabs-one-tabp a[href="#custom-tabs-one-home"]').tab('show');
+            $('#CreateModal').modal('show');
         });
 
 
@@ -520,85 +449,95 @@
             $('.alert-danger').hide();
             $('.alert-success').html('');
             $('.alert-success').hide();
+
+            var emergencyData = [];
+            $('#myTbl3 tbody tr').each(function() {
+                var emergencyname = $(this).find('input[name="emergencyname[]"]').val();
+                var emerrelation = $(this).find('input[name="emerrelation[]"]').val();
+                var emerphone = $(this).find('input[name="emerphone[]"]').val();
+
+                var emergency = {
+                    emergencyname: emergencyname,
+                    emerrelation: emerrelation,
+                    emerphone: emerphone
+                };
+                emergencyData.push(emergency);
+            });
+
+            var arrayDate = $('#Addadddate').val().split("-");
+            arrayDate[0] = parseInt(arrayDate[0]) - 543;
+            var tempadddate = arrayDate[0] + "-" + arrayDate[1] + "-" + arrayDate[2];
+
+            var arrayDateb = $('#Addbirthday').val().split("-");
+            arrayDateb[0] = parseInt(arrayDateb[0]) - 543;
+            var tempbirthday = arrayDateb[0] + "-" + arrayDateb[1] + "-" + arrayDateb[2];
+
+            var additionalData = {
+                hn: $('#Addhn').val(),
+                adddate: tempadddate,
+                tname: $('#Addtname').val(),
+                fname: $('#Addfname').val(),
+                lname: $('#Addlname').val(),
+                sex: $('#Addsex').val(),
+                birthday: tempbirthday,
+                age: $('#Addage').val(),
+                bloodgroup: $('#Addbloodgroup').val(),
+                homeno: $('#Addhomeno').val(),
+                moo: $('#Addmoo').val(),
+                soi: $('#Addsoi').val(),
+                road: $('#Addroad').val(),
+                city: $('#Addcity').val(),
+                district: $('#Adddistrict').val(),
+                subdistrict: $('#Addsubdistrict').val(),
+                postcode: $('#Addpostcode').val(),
+                telhome: $('#Addtelhome').val(),
+                phoneno: $('#Addphoneno').val(),
+                workno: $('#Addworkno').val(),
+                checkemer: $('#Addcheckemer').val(),
+                emergencyData: emergencyData,
+                _token: token
+            };
+
             $.ajax({
-                url: "{{ route('parent.store') }}",
+                url: "{{ route('contacts.store') }}",
                 method: 'post',
-                data: {
-                    centre_id: $('#AddCentre').val()[0],
-                    student_id: $('#s_student').val(),
-                    fname: $('#AddFname').val(),
-                    lname: $('#AddLname').val(),
-                    telp: $('#AddTelp').val(),
-                    email: $('#AddEmail').val(),
-                    relationship: $('#AddRelationship').val(),
-                    gender: $('input[name="gender"]:checked').val(),
-                    password: $('#AddPassword').val(),
-                    password_confirmation: $('#password_confirmation').val(),
-                    notes: $('#AddNotes').val(),
-                    address: $('#AddAddress').val(),
-                    emergency_contact: $('#AddEmergency').val(),
-                    // signature: $('#AddSignature').val(),
-                    _token: token,
-                },
-
-                error: function(result) {
-                    var dangerValidate = $('#danger_validate');
-                    dangerValidate.html(''); // Clear any previous messages
-
-                    // console.log(result);
-
-                    if (result.responseJSON.errors) {
-                        dangerValidate.show();
-
-                        $.each(result.responseJSON.errors, function(field, messages) {
-                            messages.forEach(function(message) {
-                                dangerValidate.append('<strong><li>' +
-                                    message + '</li></strong>');
-                            });
-                        });
-                    } else {
-                        dangerValidate.append('<strong><li>' + result.responseJSON.message +
-                            '</li></strong>');
-                    }
-                    dangerValidate.show();
-                },
+                data: additionalData,
                 success: function(result) {
-                    // console.log(result);
-                    if (result.success) {
-
+                    if (result.errors) {
+                        $('.alert-danger').html('');
+                        $.each(result.errors, function(key, value) {
+                            $('.alert-danger').show();
+                            $('.alert-danger').append('<strong><li>' + value +
+                                '</li></strong>');
+                        });
+                        //$('#CreateModal').scrollTop(0);
+                        $('.alert-danger').focus();
+                    } else {
                         $('.alert-danger').hide();
                         $('.alert-success').show();
-                        $('.alert-success').append('<strong><li>' + result.message +
+                        $('.alert-success').append('<strong><li>' + result.success +
                             '</li></strong>');
-                        toastr.success(result.message, {
-                            timeOut: 3000
+                        toastr.success(result.success, {
+                            timeOut: 5000
                         });
-
-                        // $('.form').trigger('reset');
+                        $('#Listview').DataTable().ajax.reload();
+                        $('.form').trigger('reset');
                         $('#CreateModal').modal('hide');
-                        location.reload();
-
-                    } else {
-
-                        $('.alert-danger').html('');
-                        $('.alert-danger').show();
-                        $('.alert-danger').append('<strong><li>' + result.message +
-                            '</li></strong>');
-
-
                     }
-                    location.reload();
-                },
-                // error: function(xhr, textStatus, errorThrown) {
-                //     console.error(xhr.statusText);
-                // }
-
+                }
             });
-            // location.reload();
-
         });
 
         let id;
+        $(document).on('click', '#getCases', function(e) {
+            id = $(this).data('id');
+            //window.location.href = "{{ route('cases', ['id' => '.id.']) }}";
+            //window.location.href = "cases";
+            //var id = '12';
+            var url = "casescontract?id=" + id;
+            //url = url.replace(':id', id);
+            location.href = url;
+        });
         $(document).on('click', '#getEditData', function(e) {
             e.preventDefault();
             $('.alert-danger').html('');
@@ -606,39 +545,104 @@
             $('.alert-success').html('');
             $('.alert-success').hide();
 
-            $('#custom-tabs-one-homee-tab').tab('show');
-
             id = $(this).data('id');
             $.ajax({
-                // url: "histories/edit/" + id,
-                url: "{{ route('parent.edit', ':id') }}".replace(':id', id),
+                url: "{{ route('thcity.city') }}",
                 method: 'GET',
                 success: function(res) {
-                    $('#getCentre').val(res.data.centre).change();
-                    $('#getStudent').val(res.data.code + ' ' + res.data.student_id);
-                    $('#getLevel').val(res.data.level_name);
-                    $('#getTerm').val(res.data.term);
-                    $('#getBookuse').val(res.data.bookuse);
-                    $('#getCourseRemaining').val(res.data.course_remaining);
-                    $('#getDate').val(res.data.date);
-                    $('#getStartTime').val(res.data.stime);
-                    $('#getEndTime').val(res.data.etime);
-                    $('#getStartDate').val(res.data.start_date);
-                    $('#getEndDate').val(res.data.end_date);
-                    $('#getComment').val(res.data.comment);
-                    // $('#getSignature').val(res.data.signature);
-                    $('#getSignature').attr('src', '{{ asset('file_upload/') }}/' + res.data
-                        .signature);
-                    console.log($('#getSignature').val(res.data.signature));
-                    $('#EditModalBody').html(res.html);
-                    $('#EditModal').modal('show');
+                    //alert(res.data.code);
+                    var provinceOb = $('#Editcity');
+                    provinceOb.html('<option value="">เลือกจังหวัด</option>');
+                    $.each(res.data, function(index, item) {
+                        provinceOb.append(
+                            $('<option></option>').val(item.code).html(item
+                                .name_th)
+                        );
+                    });
                 }
             });
+            setTimeout(function() {
+                $.ajax({
+                    url: "contacts/edit/" + id,
+                    method: 'GET',
+                    success: function(res) {
+                        $('#Edithn').val(res.datax.datac.hn);
 
-        })
+                        var arrayDate = res.datax.datac.adddate.split("-");
+                        arrayDate[0] = parseInt(arrayDate[0]) + 543;
+                        $('#Editadddate').val(arrayDate[0] + "-" + arrayDate[1] +
+                            "-" + arrayDate[2]);
+
+                        //$('#Editadddate').val(res.datax.datac.adddate);
+                        $('#Edittname').val(res.datax.datac.tname);
+                        $('#Editfname').val(res.datax.datac.fname);
+                        $('#Editlname').val(res.datax.datac.lname);
+                        $('#Editsex').val(res.datax.datac.sex);
+
+                        var arrayDateb = res.datax.datac.birthday.split("-");
+                        arrayDateb[0] = parseInt(arrayDateb[0]) + 543;
+                        $('#Editbirthday').val(arrayDateb[0] + "-" + arrayDateb[1] +
+                            "-" + arrayDateb[2]);
+                        //$('#Editbirthday').val(res.datax.datac.birthday);
+
+                        $('#Editage').val(res.datax.datac.age);
+                        $('#Editbloodgroup').val(res.datax.datac.bloodgroup);
+                        $('#Edithomeno').val(res.datax.datac.homeno);
+                        $('#Editmoo').val(res.datax.datac.moo);
+                        $('#Editsoi').val(res.datax.datac.soi);
+                        $('#Editroad').val(res.datax.datac.road);
+                        $('#Editcity').val(res.datax.datac.city);
+                        $('#Editcity').change();
+                        setTimeout(function() {
+                            $('#Editdistrict').val(res.datax.datac
+                                .district);
+                            $('#Editdistrict').change();
+                            setTimeout(function() {
+                                $('#Editsubdistrict').val(res.datax
+                                    .datac.subdistrict);
+                            }, 1000)
+                        }, 1000)
+                        $('#Editpostcode').val(res.datax.datac.postcode);
+                        $('#Edittelhome').val(res.datax.datac.telhome);
+                        $('#Editphoneno').val(res.datax.datac.phoneno);
+                        $('#Editworkno').val(res.datax.datac.workno);
+
+                        var tbody = document.querySelector('#myTbl3e tbody');
+                        while (tbody.firstChild) {
+                            tbody.removeChild(tbody.firstChild);
+                        }
+
+                        $.each(res.datax.emer, function(index, value) {
+                            $('#myTbl3e tbody').append($('<tr>')
+                                .append($('<td style="display:none;">')
+                                    .append(value.id))
+                                .append($('<td width="30%">').append(
+                                    '<div class="col-md-12 col-sm-12 col-xs-12"><input type="text" id="eemergencyname" name="eemergencyname[]" class="form-control has-feedback-left" value="' +
+                                    value.emergencyname +
+                                    '" required="required"></div>'))
+                                .append($('<td width="10%">').append(
+                                    '<div class="col-md-12 col-sm-12 col-xs-12"><input type="text" id="eemerrelation" name="eemerrelation[]" class="form-control has-feedback-left" value="' +
+                                    value.emerrelation +
+                                    '" required="required"></div>'))
+                                .append($('<td width="10%">').append(
+                                    '<div class="col-md-12 col-sm-12 col-xs-12"><input type="text" id="eemerphone" name="eemerphone[]" class="form-control has-feedback-left" onkeydown="validateNumber(event)" value="' +
+                                    value.emerphone +
+                                    '" required="required"></div>'))
+                                .append($('<td width="5%">').append(
+                                    '<button type="button" name="deletem" id="deletem" class="btn btn-sm btn-danger removeRowBtn" onclick="$(this).closest(\'tr\').remove();\"><i class="fa fa-minus"></i></button>'
+                                )));
+                        });
+
+                        $('#custom-tabs-one-tabe a[href="#custom-tabs-one-homee"]')
+                            .tab('show');
+                        $('#EditModal').modal('show');
+                    }
+                });
+            }, 1000)
+        });
 
         $('#SubmitEditForm').click(function(e) {
-            if (!confirm("Confirm the action?")) return;
+            if (!confirm("ยืนยันการทำรายการ ?")) return;
             e.preventDefault();
 
             $('.alert-danger').html('');
@@ -646,13 +650,57 @@
             $('.alert-success').html('');
             $('.alert-success').hide();
 
+            var eemergencyData = [];
+            $('#myTbl3e tbody tr').each(function(index, tr) {
+                var eemertype = tr.cells[0].innerHTML;
+                var eemergencyname = $(this).find('input[name="eemergencyname[]"]').val();
+                var eemerrelation = $(this).find('input[name="eemerrelation[]"]').val();
+                var eemerphone = $(this).find('input[name="eemerphone[]"]').val();
+                var eemergency = {
+                    eemertype: eemertype,
+                    emergencyname: eemergencyname,
+                    emerrelation: eemerrelation,
+                    emerphone: eemerphone
+                };
+                eemergencyData.push(eemergency);
+            });
 
+            var arrayDate = $('#Editadddate').val().split("-");
+            arrayDate[0] = parseInt(arrayDate[0]) - 543;
+            var tempadddate = arrayDate[0] + "-" + arrayDate[1] + "-" + arrayDate[2];
+
+            var arrayDateb = $('#Editbirthday').val().split("-");
+            arrayDateb[0] = parseInt(arrayDateb[0]) - 543;
+            var tempbirthday = arrayDateb[0] + "-" + arrayDateb[1] + "-" + arrayDateb[2];
+
+            var additionalData = {
+                hn: $('#Edithn').val(),
+                adddate: tempadddate,
+                tname: $('#Edittname').val(),
+                fname: $('#Editfname').val(),
+                lname: $('#Editlname').val(),
+                sex: $('#Editsex').val(),
+                birthday: tempbirthday,
+                age: $('#Editage').val(),
+                bloodgroup: $('#Editbloodgroup').val(),
+                homeno: $('#Edithomeno').val(),
+                moo: $('#Editmoo').val(),
+                soi: $('#Editsoi').val(),
+                road: $('#Editroad').val(),
+                city: $('#Editcity').val(),
+                district: $('#Editdistrict').val(),
+                subdistrict: $('#Editsubdistrict').val(),
+                postcode: $('#Editpostcode').val(),
+                telhome: $('#Edittelhome').val(),
+                phoneno: $('#Editphoneno').val(),
+                workno: $('#Editworkno').val(),
+                eemergencyData: eemergencyData
+            };
             $.ajax({
-                url: "parent/update/" + id,
+                url: "contacts/update/" + id,
                 method: 'PUT',
-                data: {
-                    comment: $('#getComment').val(),
-                },
+                data: additionalData,
+
                 success: function(result) {
                     //console.log(result);
                     if (result.errors) {
@@ -662,22 +710,21 @@
                             $('.alert-danger').append('<strong><li>' + value +
                                 '</li></strong>');
                         });
+                        $('#EditModal').scrollTop(0);
                     } else {
-                        var ostatus = result.discontinued;
-                        if (ostatus == 1) {
-                            var url = "{{ route('discontinued') }}";
-                            window.location.href = url;
-                        } else {
-                            $('.alert-danger').hide();
-                            $('.alert-success').show();
-                            $('.alert-success').append('<strong><li>' + result.success +
-                                '</li></strong>');
-                            $('#EditModal').modal('hide');
-                            toastr.success(result.success, {
-                                timeOut: 5000
-                            });
-                            $('#Listview').DataTable().ajax.reload();
-                        }
+                        $('.alert-danger').hide();
+                        $('.alert-success').show();
+                        $('.alert-success').append('<strong><li>' + result.success +
+                            '</li></strong>');
+                        $('#EditModal').modal('hide');
+                        toastr.success(result.success, {
+                            timeOut: 5000
+                        });
+                        $('#Listview').DataTable().ajax.reload();
+                        //setTimeout(function() {
+                        //$('.alert-success').hide();
+
+                        //}, 10000);
 
                     }
                 }
@@ -685,10 +732,10 @@
         });
 
         $(document).on('click', '.btn-delete', function() {
-            if (!confirm("Confirm the action?")) return;
+            if (!confirm("ยืนยันการทำรายการ ?")) return;
 
-            var rowid = $(this).data('rowid');
-            var el = $(this);
+            var rowid = $(this).data('rowid')
+            var el = $(this)
             if (!rowid) return;
 
 
@@ -696,7 +743,7 @@
                 //type: "POST",
                 method: 'DELETE',
                 dataType: 'JSON',
-                url: "/parent/" + rowid,
+                url: "contacts/destroy/",
                 data: {
                     id: rowid,
                     //_method: 'delete',
@@ -716,5 +763,142 @@
             }); //end ajax
         })
 
+
     });
+</script>
+<script>
+    $('#addRowBtn').click(function() {
+        $('#myTbl3 tbody').append($('<tr>')
+            .append($('<td width="30%">').append(
+                '<div class="col-md-12 col-sm-12 col-xs-12"><input type="text" id="emergencyname" name="emergencyname[]" class="form-control has-feedback-left" value="" required="required"></div>'
+            ))
+            .append($('<td width="10%">').append(
+                '<div class="col-md-12 col-sm-12 col-xs-12"><input type="text" id="emerrelation" name="emerrelation[]" class="form-control has-feedback-left" value="" required="required"></div>'
+            ))
+            .append($('<td width="10%">').append(
+                '<div class="col-md-12 col-sm-12 col-xs-12"><input type="text" id="emerphone" name="emerphone[]" class="form-control has-feedback-left" onkeydown="validateNumber(event)" value="" required="required"></div>'
+            ))
+            .append($('<td width="5%">').append(
+                '<button type="button" name="deletem" id="deletem" class="btn btn-sm btn-danger removeRowBtn" onclick="$(this).closest(\'tr\').remove();\"><i class="fa fa-minus"></i></button>'
+            )));
+    });
+    $('#editRowBtne').click(function() {
+        $('#myTbl3e tbody').append($('<tr>')
+            .append($('<td style="display:none;">').append(''))
+            .append($('<td width="30%">').append(
+                '<div class="col-md-12 col-sm-12 col-xs-12"><input type="text" id="eemergencyname" name="eemergencyname[]" class="form-control has-feedback-left" value="" required="required"></div>'
+            ))
+            .append($('<td width="10%">').append(
+                '<div class="col-md-12 col-sm-12 col-xs-12"><input type="text" id="eemerrelation" name="eemerrelation[]" class="form-control has-feedback-left" value="" required="required"></div>'
+            ))
+            .append($('<td width="10%">').append(
+                '<div class="col-md-12 col-sm-12 col-xs-12"><input type="text" id="eemerphone" name="eemerphone[]" class="form-control has-feedback-left" onkeydown="validateNumber(event)" value="" required="required"></div>'
+            ))
+            .append($('<td width="5%">').append(
+                '<button type="button" name="deletem" id="deletem" class="btn btn-sm btn-danger removeRowBtn" onclick="$(this).closest(\'tr\').remove();\"><i class="fa fa-minus"></i></button>'
+            )));
+    });
+
+    $(function() {
+
+        var provinceOb = $('#Addcity');
+        var districtOb = $('#Adddistrict');
+        var cartonOb = $('#Addsubdistrict');
+
+        // on change province
+        $('#Addcity').on('change', function() {
+            var provinceId = $(this).val();
+            districtOb.html('<option value="">เลือกอำเภอ</option>');
+            $.ajax({
+                url: "thdistrict/district/" + provinceId,
+                method: 'GET',
+                success: function(res) {
+                    districtOb.html('<option value="">เลือกอำเภอ</option>');
+                    cartonOb.html('<option value="">เลือกตำบล</option>');
+                    $.each(res.data, function(index, item) {
+                        districtOb.append(
+                            $('<option></option>').val(item.code).html(item
+                                .name_th)
+                        );
+                    });
+                }
+            });
+        });
+        districtOb.on('change', function() {
+            var districtId = $(this).val();
+            cartonOb.html('<option value="">เลือกตำบล</option>');
+            $.ajax({
+                url: "thsubdistrict/subdistrict/" + districtId,
+                method: 'GET',
+                success: function(res) {
+                    cartonOb.html('<option value="">เลือกตำบล</option>');
+                    $.each(res.data, function(index, item) {
+                        cartonOb.append(
+                            $('<option></option>').val(item.code).html(item
+                                .name_th)
+                        );
+                    });
+                }
+            });
+        });
+
+        var EprovinceOb = $('#Editcity');
+        var EdistrictOb = $('#Editdistrict');
+        var EcartonOb = $('#Editsubdistrict');
+
+        // Edit
+        $('#Editcity').on('change', function() {
+            var provinceId = $(this).val();
+            EdistrictOb.html('<option value="">เลือกอำเภอ</option>');
+            $.ajax({
+                url: "thdistrict/district/" + provinceId,
+                method: 'GET',
+                success: function(res) {
+                    EdistrictOb.html('<option value="">เลือกอำเภอ</option>');
+                    EcartonOb.html('<option value="">เลือกตำบล</option>');
+                    $.each(res.data, function(index, item) {
+                        EdistrictOb.append(
+                            $('<option></option>').val(item.code).html(item
+                                .name_th)
+                        );
+                    });
+                }
+            });
+        });
+        EdistrictOb.on('change', function() {
+            var districtId = $(this).val();
+            EcartonOb.html('<option value="">เลือกตำบล</option>');
+            $.ajax({
+                url: "thsubdistrict/subdistrict/" + districtId,
+                method: 'GET',
+                success: function(res) {
+                    EcartonOb.html('<option value="">เลือกตำบล</option>');
+                    $.each(res.data, function(index, item) {
+                        EcartonOb.append(
+                            $('<option></option>').val(item.code).html(item
+                                .name_th)
+                        );
+                    });
+                }
+            });
+        });
+    });
+
+    function validateNumber(event) {
+        //var keyCode = event.which || event.keyCode;
+        //if ((keyCode < 48 || keyCode > 57) && keyCode !== 8) {
+        //if ((keyCode < 48 || (keyCode > 57 && keyCode < 96) || keyCode > 105) && keyCode !== 8) {
+        //    event.preventDefault();
+        //} 
+        var allowedKeys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+        var keyCode = event.key;
+
+        if (keyCode === "Backspace") {
+            return;
+        }
+
+        if (allowedKeys.indexOf(keyCode) === -1) {
+            event.preventDefault();
+        }
+    }
 </script>
